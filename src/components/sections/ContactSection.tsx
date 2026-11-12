@@ -34,10 +34,10 @@ export function ContactSection() {
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.55, ease: "easeOut" }}
+          initial={{ y: 12 }}
+          whileInView={{ y: 0 }}
+          viewport={{ once: true, amount: 0.05 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="glass-card relative overflow-hidden rounded-3xl p-8 sm:p-10 lg:p-12"
         >
           {/* Malla de gradiente suave cian/índigo de fondo */}

@@ -32,10 +32,10 @@ export function ProjectsGridSection() {
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          initial={{ y: 12 }}
+          whileInView={{ y: 0 }}
+          viewport={{ once: true, amount: 0.05 }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
           className="mb-10 flex flex-col gap-2"
         >
           <span className="font-mono text-xs font-semibold tracking-wider text-cyan-400 uppercase">
@@ -59,13 +59,13 @@ export function ProjectsGridSection() {
             return (
               <motion.article
                 key={project.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ y: 12 }}
+                whileInView={{ y: 0 }}
                 whileHover={{ y: -4 }}
-                viewport={{ once: true, amount: 0.15 }}
+                viewport={{ once: true, amount: 0.05 }}
                 transition={{
-                  duration: 0.45,
-                  delay: index * 0.06,
+                  duration: 0.4,
+                  delay: index * 0.04,
                   ease: "easeOut",
                 }}
                 className="glass-card glass-card-hover flex flex-col justify-between rounded-2xl p-6"

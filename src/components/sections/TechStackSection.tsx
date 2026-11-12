@@ -63,10 +63,10 @@ export function TechStackSection() {
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          initial={{ y: 12 }}
+          whileInView={{ y: 0 }}
+          viewport={{ once: true, amount: 0.05 }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
           className="mb-10 space-y-2"
         >
           <span className="font-mono text-xs font-semibold tracking-wider text-cyan-400 uppercase">
@@ -88,19 +88,18 @@ export function TechStackSection() {
           {stackLayers.map((layer, index) => {
             const visuals = getLayerVisuals(layer.id);
             const LayerIcon = visuals.icon;
-            // Bento Grid: primeras 2 capas ocupan 3 cols (mitad), las siguientes 3 ocupan 2 cols (tercios)
             const bentoSpan =
               index < 2 ? "lg:col-span-3" : "lg:col-span-2";
 
             return (
               <motion.div
                 key={layer.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
+                initial={{ y: 12 }}
+                whileInView={{ y: 0 }}
+                viewport={{ once: true, amount: 0.05 }}
                 transition={{
-                  duration: 0.45,
-                  delay: index * 0.06,
+                  duration: 0.4,
+                  delay: index * 0.04,
                   ease: "easeOut",
                 }}
                 className={`glass-card glass-card-hover flex flex-col justify-between rounded-2xl p-6 ${bentoSpan}`}

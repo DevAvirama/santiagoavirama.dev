@@ -25,11 +25,11 @@ export function HeroSection() {
     >
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
-          {/* Columna izquierda (7 cols) */}
+          {/* Columna izquierda (7 cols) - 100% visible desde SSR para LCP óptimo */}
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            initial={{ y: 0 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
             className="space-y-6 lg:col-span-7"
           >
             <div className="inline-flex items-center gap-2.5 rounded-full border border-cyan-500/30 bg-slate-900/70 px-3.5 py-1.5 font-mono text-xs text-cyan-200 shadow-[0_0_20px_-5px_rgba(56,189,248,0.3)] backdrop-blur-md">

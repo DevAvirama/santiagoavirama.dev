@@ -64,10 +64,10 @@ export function AboutAndCredentialsSection() {
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          initial={{ y: 12 }}
+          whileInView={{ y: 0 }}
+          viewport={{ once: true, amount: 0.05 }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
           className="mb-10 space-y-2"
         >
           <span className="font-mono text-xs font-semibold tracking-wider text-cyan-400 uppercase">
@@ -92,12 +92,12 @@ export function AboutAndCredentialsSection() {
             return (
               <motion.div
                 key={pillar.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
+                initial={{ y: 12 }}
+                whileInView={{ y: 0 }}
+                viewport={{ once: true, amount: 0.05 }}
                 transition={{
-                  duration: 0.45,
-                  delay: index * 0.06,
+                  duration: 0.4,
+                  delay: index * 0.04,
                   ease: "easeOut",
                 }}
                 className="glass-card glass-card-hover relative overflow-hidden rounded-2xl p-5 pl-6"
@@ -125,10 +125,10 @@ export function AboutAndCredentialsSection() {
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            initial={{ y: 12 }}
+            whileInView={{ y: 0 }}
+            viewport={{ once: true, amount: 0.05 }}
+            transition={{ duration: 0.45, ease: "easeOut" }}
             className="space-y-8 lg:col-span-5"
           >
             <div className="space-y-4">
@@ -209,10 +209,10 @@ export function AboutAndCredentialsSection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.55, delay: 0.08, ease: "easeOut" }}
+            initial={{ y: 12 }}
+            whileInView={{ y: 0 }}
+            viewport={{ once: true, amount: 0.05 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
             className="space-y-4 lg:col-span-7"
           >
             <h3 className="flex items-center gap-2 font-mono text-xs font-semibold tracking-wider text-emerald-300 uppercase">

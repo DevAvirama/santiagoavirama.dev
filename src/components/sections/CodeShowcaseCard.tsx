@@ -28,9 +28,9 @@ export function CodeShowcaseCard() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.55, delay: 0.1, ease: "easeOut" }}
+      initial={{ y: 0 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
       className="relative mx-auto w-full max-w-xl lg:max-w-none"
     >
       {/* Halo luminoso trasero */}
@@ -102,14 +102,14 @@ export function CodeShowcaseCard() {
 
         {/* Cuerpo de código con resaltado de sintaxis */}
         <div className="p-5 font-mono text-xs leading-relaxed sm:text-[13px]">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             {activeTab === "stack.ts" && (
               <motion.div
                 key="stack.ts"
-                initial={{ opacity: 0, y: 6 }}
+                initial={{ opacity: 1, y: 0 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.18 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.15 }}
                 className="space-y-1.5"
               >
                 <div className="text-slate-500">
@@ -176,10 +176,10 @@ export function CodeShowcaseCard() {
             {activeTab === "security.ts" && (
               <motion.div
                 key="security.ts"
-                initial={{ opacity: 0, y: 6 }}
+                initial={{ opacity: 1, y: 0 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.18 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.15 }}
                 className="space-y-1.5"
               >
                 <div className="text-slate-500">
@@ -240,10 +240,10 @@ export function CodeShowcaseCard() {
             {activeTab === "architecture.ts" && (
               <motion.div
                 key="architecture.ts"
-                initial={{ opacity: 0, y: 6 }}
+                initial={{ opacity: 1, y: 0 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.18 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.15 }}
                 className="space-y-1.5"
               >
                 <div className="text-slate-500">

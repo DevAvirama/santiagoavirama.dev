@@ -41,10 +41,10 @@ export function FlagshipProjectSection() {
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          initial={{ y: 12 }}
+          whileInView={{ y: 0 }}
+          viewport={{ once: true, amount: 0.05 }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
           className="mb-8 flex flex-col gap-2"
         >
           <span className="font-mono text-xs font-semibold tracking-wider text-cyan-400 uppercase">
@@ -59,10 +59,10 @@ export function FlagshipProjectSection() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.55, delay: 0.05, ease: "easeOut" }}
+          initial={{ y: 12 }}
+          whileInView={{ y: 0 }}
+          viewport={{ once: true, amount: 0.05 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="glass-card relative overflow-hidden rounded-3xl p-6 sm:p-8 lg:p-10"
         >
           {/* Resplandor ambiental en la esquina superior derecha */}

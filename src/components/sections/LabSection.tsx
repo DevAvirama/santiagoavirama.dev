@@ -36,10 +36,10 @@ export function LabSection({ repositories }: LabSectionProps) {
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          initial={{ y: 12 }}
+          whileInView={{ y: 0 }}
+          viewport={{ once: true, amount: 0.05 }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
           className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end"
         >
           <div className="space-y-2">
@@ -74,10 +74,10 @@ export function LabSection({ repositories }: LabSectionProps) {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.55, delay: 0.05, ease: "easeOut" }}
+          initial={{ y: 12 }}
+          whileInView={{ y: 0 }}
+          viewport={{ once: true, amount: 0.05 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="glass-card overflow-hidden rounded-2xl"
         >
           <div className="flex items-center justify-between border-b border-slate-800/80 bg-slate-950/90 px-4 py-3 font-mono text-xs text-slate-400">

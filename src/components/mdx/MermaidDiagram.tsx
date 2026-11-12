@@ -14,10 +14,20 @@ function ensureMermaidInitialized(): void {
     mermaid.initialize({
       startOnLoad: false,
       theme: "dark",
-      securityLevel: "loose",
     });
     isMermaidInitialized = true;
   }
+}
+
+function sanitizeMermaidChart(input: unknown): string {
+  if (typeof input !== "string") {
+    return "";
+  }
+  return input
+    .replace(/<[\u2013\u2014]+>/g, "<-->")
+    .replace(/[\u2013\u2014]+>/g, "-->")
+    .replace(/<[\u2013\u2014]+/g, "<--")
+    .trim();
 }
 
 export function MermaidDiagram({ chart }: MermaidDiagramProps) {
@@ -28,10 +38,13 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
   );
   const renderCountRef = React.useRef(0);
 
-  const normalizedChart = typeof chart === "string" ? chart.trim() : "";
+  const normalizedChart = React.useMemo(
+    () => sanitizeMermaidChart(chart),
+    [chart],
+  );
 
   const [svgContent, setSvgContent] = React.useState<string | null>(null);
-  const [hasError, setHasError] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const [isLoading, setIsLoading] = React.useState(Boolean(normalizedChart));
 
   React.useEffect(() => {
@@ -44,7 +57,7 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
     }
 
     renderCountRef.current += 1;
-    const uniqueRenderId = `mermaid-${baseId}-${renderCountRef.current}-${Date.now()}`;
+    const uniqueRenderId = `mermaid-${baseId}-${renderCountRef.current}`;
 
     async function renderDiagram() {
       try {
@@ -55,16 +68,22 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
         if (isMounted) {
           if (typeof svg === "string" && svg.trim().length > 0) {
             setSvgContent(svg);
-            setHasError(false);
+            setErrorMessage(null);
           } else {
             setSvgContent(null);
-            setHasError(true);
+            setErrorMessage(
+              "El motor Mermaid devolvió un diagrama vacío para esta entrada.",
+            );
           }
         }
-      } catch {
+      } catch (err) {
         if (isMounted) {
+          const msg =
+            err instanceof Error
+              ? err.message
+              : "Error al renderizar la sintaxis del diagrama Mermaid.";
           setSvgContent(null);
-          setHasError(true);
+          setErrorMessage(msg);
         }
       } finally {
         if (typeof document !== "undefined") {
@@ -86,16 +105,21 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
     };
   }, [baseId, normalizedChart]);
 
-  if (!normalizedChart || hasError || (!isLoading && !svgContent)) {
+  if (!normalizedChart || errorMessage || (!isLoading && !svgContent)) {
     return (
       <figure className="glass-card my-8 overflow-hidden rounded-2xl p-4 sm:p-6">
         <div className="mb-3 flex items-center justify-between border-b border-slate-800/80 pb-2.5 font-mono text-xs text-slate-400">
-          <span className="text-cyan-400">
-            {"// Diagrama de Arquitectura del Sistema (Vista Código)"}
+          <span className="text-amber-400">
+            {"// Diagrama de Arquitectura del Sistema (Fallback de Código)"}
           </span>
           <span className="text-indigo-300">Mermaid.js</span>
         </div>
-        <pre className="overflow-x-auto rounded-xl border border-slate-800/90 bg-slate-950/90 p-4 font-mono text-xs leading-relaxed text-slate-200">
+        {errorMessage && (
+          <p className="mb-3 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 font-mono text-xs text-amber-300">
+            {errorMessage}
+          </p>
+        )}
+        <pre className="overflow-x-auto rounded-xl border border-slate-800/90 bg-slate-950/90 p-4 font-mono text-xs leading-relaxed text-slate-200 [font-variant-ligatures:none]">
           <code>{normalizedChart}</code>
         </pre>
       </figure>
@@ -111,13 +135,8 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
         <span className="text-indigo-300">Mermaid.js</span>
       </div>
       {isLoading ? (
-        <div className="space-y-3 py-2">
-          <div className="flex items-center justify-between font-mono text-xs text-slate-400">
-            <span>Inicializando esquema interactivo...</span>
-          </div>
-          <pre className="overflow-x-auto rounded-xl border border-slate-800/80 bg-slate-950/80 p-4 font-mono text-xs leading-relaxed text-slate-300">
-            <code>{normalizedChart}</code>
-          </pre>
+        <div className="flex h-44 items-center justify-center font-mono text-xs text-slate-400">
+          <span>Inicializando esquema interactivo...</span>
         </div>
       ) : (
         <div

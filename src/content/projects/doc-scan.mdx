@@ -44,7 +44,7 @@ flowchart LR
         Ports["Domain Ports (IDocumentRepository / ICVClient)"]
         Repo["SQLAlchemy Async Repository"]
         HTTP["HTTPX CV Adapter"]
-        UI -->|POST multipart/form-data| API
+        UI -->|"POST multipart/form-data"| API
         API --> UC
         UC --> Ports
         Ports --> Repo
@@ -55,14 +55,14 @@ flowchart LR
         CV_API["FastAPI (/api/v1/extract)"]
         Lap["OpenCV Blur Check (Varianza Laplaciana)"]
         Gem["Gemini Vision API (Structured Outputs)"]
-        HTTP -->|Imagen binaria| CV_API
+        HTTP -->|"Imagen binaria"| CV_API
         CV_API --> Lap
-        Lap -->|blur_score >= umbral| Gem
+        Lap -->|"blur_score >= umbral"| Gem
     end
 
     subgraph Datos["Persistencia Relacional"]
         PG[("PostgreSQL / Supabase")]
-        Repo -->|Transacción Atómica| PG
+        Repo -->|"Transacción Atómica"| PG
     end
 ```
 

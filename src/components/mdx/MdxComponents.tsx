@@ -125,15 +125,21 @@ export const mdxComponents: NonNullable<MDXRemoteProps["components"]> = {
     </td>
   ),
   pre: ({ children, ...props }: React.ComponentPropsWithoutRef<"pre">) => {
-    if (
-      React.isValidElement<{ className?: string; children?: React.ReactNode }>(
-        children,
-      )
-    ) {
-      const childClassName = children.props.className ?? "";
-      if (childClassName.includes("language-mermaid")) {
-        const chartText = extractTextFromChildren(children.props.children);
-        return <MermaidDiagram chart={chartText} />;
+    const childArray = React.Children.toArray(children);
+    for (const child of childArray) {
+      if (
+        React.isValidElement<{ className?: string; children?: React.ReactNode }>(
+          child,
+        )
+      ) {
+        const childClassName =
+          typeof child.props.className === "string"
+            ? child.props.className
+            : "";
+        if (childClassName.includes("language-mermaid")) {
+          const chartText = extractTextFromChildren(child.props.children);
+          return <MermaidDiagram chart={chartText} />;
+        }
       }
     }
 
@@ -151,12 +157,6 @@ export const mdxComponents: NonNullable<MDXRemoteProps["components"]> = {
     children,
     ...props
   }: React.ComponentPropsWithoutRef<"code">) => {
-    const isMermaid =
-      typeof className === "string" && className.includes("language-mermaid");
-    if (isMermaid) {
-      return <MermaidDiagram chart={extractTextFromChildren(children)} />;
-    }
-
     const isBlockCode =
       typeof className === "string" && className.includes("language-");
     if (isBlockCode) {

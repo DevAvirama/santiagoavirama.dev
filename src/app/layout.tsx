@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import { AmbientBackground } from "@/components/layout/AmbientBackground";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { JsonLd } from "@/components/seo/JsonLd";
 import "./globals.css";
 
 const inter = Inter({
@@ -26,18 +27,26 @@ export const metadata: Metadata = {
   },
   description:
     "Portafolio de ingeniería de software y casos de estudio técnicos de Santiago Avirama. Arquitecturas web, sistemas distribuidos, visión artificial y seguridad desde el diseño.",
+  alternates: {
+    canonical: "/",
+  },
   keywords: [
     "Santiago Avirama",
     "DevAvirama",
     "Desarrollador Full Stack",
-    "Next.js",
+    "Ingeniero de Software",
+    "Next.js App Router",
     "TypeScript",
     "Python",
     "FastAPI",
     "Django",
+    "PostgreSQL",
+    "Docker",
+    "Arquitectura Hexagonal",
+    "Clean Architecture",
     "Visión Artificial",
     "YOLOv8",
-    "ISO 27001",
+    "Auditor Interno ISO 27001",
     "Ciberseguridad",
     "Popayán",
     "Colombia",
@@ -66,6 +75,52 @@ export const metadata: Metadata = {
   },
 };
 
+const rootStructuredData: Record<string, unknown> = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://santiagoavirama.dev/#person",
+      name: "Santiago Avirama",
+      url: "https://santiagoavirama.dev",
+      jobTitle: "Desarrollador Full Stack End-to-End",
+      sameAs: ["https://github.com/DevAvirama"],
+      alumniOf: {
+        "@type": "EducationalOrganization",
+        name: "Servicio Nacional de Aprendizaje (SENA)",
+      },
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Popayán",
+        addressRegion: "Cauca",
+        addressCountry: "Colombia",
+      },
+      knowsAbout: [
+        "Next.js",
+        "TypeScript",
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "Docker",
+        "Linux",
+        "Computer Vision",
+        "ISO/IEC 27001:2022",
+        "Cybersecurity",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://santiagoavirama.dev/#website",
+      name: "Santiago Avirama — Portafolio de Ingeniería de Software",
+      url: "https://santiagoavirama.dev",
+      inLanguage: "es-CO",
+      publisher: {
+        "@id": "https://santiagoavirama.dev/#person",
+      },
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -77,6 +132,7 @@ export default function RootLayout({
       className={`dark ${inter.variable} ${jetbrainsMono.variable} h-full scroll-smooth`}
     >
       <body className="relative flex min-h-screen flex-col bg-slate-950 font-sans text-slate-100 antialiased">
+        <JsonLd data={rootStructuredData} />
         <AmbientBackground />
         <Navbar />
         <main id="contenido-principal" className="relative z-10 flex-1">

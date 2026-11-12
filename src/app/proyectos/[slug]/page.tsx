@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { mdxComponents } from "@/components/mdx/MdxComponents";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getAllProjectSlugs, getProjectBySlug } from "@/lib/mdx";
 
 interface ProjectCaseStudyPageProps {
@@ -38,6 +39,9 @@ export async function generateMetadata({
   return {
     title: project.frontmatter.title,
     description: project.frontmatter.summary,
+    alternates: {
+      canonical: `/proyectos/${project.slug}`,
+    },
     openGraph: {
       title: project.frontmatter.title,
       description: project.frontmatter.summary,
@@ -59,8 +63,34 @@ export default async function ProjectCaseStudyPage({
 
   const { frontmatter, content } = project;
 
+  const caseStudyStructuredData: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: frontmatter.title,
+    description: frontmatter.summary,
+    url: `https://santiagoavirama.dev/proyectos/${slug}`,
+    ...(frontmatter.date ? { datePublished: frontmatter.date } : {}),
+    author: {
+      "@type": "Person",
+      name: "Santiago Avirama",
+      url: "https://santiagoavirama.dev",
+      sameAs: ["https://github.com/DevAvirama"],
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Santiago Avirama",
+      url: "https://santiagoavirama.dev",
+    },
+    keywords: frontmatter.stack.join(", "),
+    about: frontmatter.stack.map((tech) => ({
+      "@type": "Thing",
+      name: tech,
+    })),
+  };
+
   return (
     <article className="py-12 sm:py-16">
+      <JsonLd data={caseStudyStructuredData} />
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
           <Link

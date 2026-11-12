@@ -1,21 +1,68 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Santiago Avirama — Portafolio Personal & Casos de Estudio",
+  metadataBase: new URL("https://santiagoavirama.dev"),
+  title: {
+    default:
+      "Santiago Avirama — Desarrollador Full Stack End-to-End | Arquitecturas Web, IA y Seguridad",
+    template: "%s | Santiago Avirama",
+  },
   description:
-    "Portafolio personal y casos de estudio de ingeniería de software — Santiago Avirama",
+    "Portafolio de ingeniería de software y casos de estudio técnicos de Santiago Avirama. Arquitecturas web, sistemas distribuidos, visión artificial y seguridad desde el diseño.",
+  keywords: [
+    "Santiago Avirama",
+    "DevAvirama",
+    "Desarrollador Full Stack",
+    "Next.js",
+    "TypeScript",
+    "Python",
+    "FastAPI",
+    "Django",
+    "Visión Artificial",
+    "YOLOv8",
+    "ISO 27001",
+    "Ciberseguridad",
+    "Popayán",
+    "Colombia",
+  ],
+  authors: [{ name: "Santiago Avirama", url: "https://santiagoavirama.dev" }],
+  creator: "Santiago Avirama",
+  openGraph: {
+    type: "website",
+    locale: "es_CO",
+    url: "https://santiagoavirama.dev",
+    siteName: "santiagoavirama.dev",
+    title:
+      "Santiago Avirama — Desarrollador Full Stack End-to-End | Arquitecturas Web, IA y Seguridad",
+    description:
+      "Casos de estudio de ingeniería de software: Ecosistema PorciTech, doc-scan-monorepo, arquitecturas hexagonales, visión artificial y seguridad desde el diseño.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Santiago Avirama — Desarrollador Full Stack End-to-End",
+    description:
+      "Arquitecturas Web, Sistemas Distribuidos, Visión Artificial y Seguridad desde el Diseño.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -25,10 +72,16 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      lang="es"
+      className={`dark ${inter.variable} ${jetbrainsMono.variable} h-full scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex min-h-screen flex-col bg-zinc-950 font-sans text-zinc-100 antialiased">
+        <Navbar />
+        <main id="contenido-principal" className="flex-1">
+          {children}
+        </main>
+        <Footer />
+      </body>
     </html>
   );
 }

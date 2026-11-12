@@ -1,0 +1,15 @@
+Dockerfile
+.dockerignore
+node_modules
+.next
+out
+build
+coverage
+.git
+.gitignore
+.idea
+.vscode
+*.pem
+*.tsbuildinfo
+next-env.d.ts
+.env*.local

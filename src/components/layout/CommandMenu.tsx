@@ -80,11 +80,11 @@ export function CommandMenu() {
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Abrir paleta de comandos (Ctrl+K o Comando+K)"
-        className="group inline-flex h-9 items-center gap-2.5 rounded-lg border border-zinc-800 bg-zinc-900/70 px-3 text-xs text-zinc-400 transition-colors hover:border-emerald-500/40 hover:bg-zinc-900 hover:text-zinc-100 focus-visible:ring-2 focus-visible:ring-emerald-400/50 focus-visible:outline-none"
+        className="group inline-flex h-9 items-center gap-2.5 rounded-xl border border-slate-800/90 bg-slate-900/60 px-3 text-xs text-slate-300 backdrop-blur-md transition-all hover:border-cyan-400/50 hover:bg-slate-900/90 hover:text-white hover:shadow-[0_0_20px_-5px_rgba(34,211,238,0.25)] focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:outline-none"
       >
-        <SearchIcon className="size-3.5 text-emerald-400 transition-transform group-hover:scale-105" />
+        <SearchIcon className="size-3.5 text-cyan-400 transition-transform group-hover:scale-105" />
         <span className="hidden font-mono sm:inline-block">Comandos...</span>
-        <kbd className="pointer-events-none inline-flex h-5 items-center gap-0.5 rounded border border-zinc-800 bg-zinc-950 px-1.5 font-mono text-[10px] font-medium text-zinc-400">
+        <kbd className="pointer-events-none inline-flex h-5 items-center gap-0.5 rounded border border-slate-700/80 bg-slate-950/90 px-1.5 font-mono text-[10px] font-medium text-cyan-300">
           <span className="text-xs">⌘</span>K
         </kbd>
       </button>
@@ -94,12 +94,12 @@ export function CommandMenu() {
         onOpenChange={(nextOpen) => setOpen(nextOpen)}
         title="Paleta de Comandos — santiagoavirama.dev"
         description="Navega rápidamente por secciones, casos de estudio y acciones de contacto."
-        className="max-w-lg border border-zinc-800 bg-zinc-950 text-zinc-100 shadow-2xl shadow-black/80"
+        className="max-w-lg border border-slate-800 bg-slate-950/95 text-slate-100 shadow-2xl shadow-black/90 backdrop-blur-xl"
       >
-        <Command className="bg-zinc-950 text-zinc-100">
+        <Command className="bg-transparent text-slate-100">
           <CommandInput placeholder="Escribe un comando o busca una sección..." />
           <CommandList className="max-h-80">
-            <CommandEmpty className="py-6 font-mono text-xs text-zinc-500">
+            <CommandEmpty className="py-6 font-mono text-xs text-slate-400">
               No se encontraron resultados para tu búsqueda.
             </CommandEmpty>
 
@@ -108,7 +108,7 @@ export function CommandMenu() {
                 value="caso de estudio porcitech ecosistema vision artificial"
                 onSelect={() => runCommand(() => router.push("/proyectos/porcitech"))}
               >
-                <BookOpenIcon className="size-4 text-emerald-400" />
+                <BookOpenIcon className="size-4 text-cyan-400" />
                 <span>Caso de Estudio: Ecosistema PorciTech</span>
                 <CommandShortcut>MDX</CommandShortcut>
               </CommandItem>
@@ -116,20 +116,20 @@ export function CommandMenu() {
                 value="caso de estudio doc-scan-monorepo arquitectura hexagonal"
                 onSelect={() => runCommand(() => router.push("/proyectos/doc-scan"))}
               >
-                <BookOpenIcon className="size-4 text-cyan-400" />
+                <BookOpenIcon className="size-4 text-indigo-400" />
                 <span>Caso de Estudio: doc-scan-monorepo</span>
                 <CommandShortcut>MDX</CommandShortcut>
               </CommandItem>
             </CommandGroup>
 
-            <CommandSeparator className="bg-zinc-800/80" />
+            <CommandSeparator className="bg-slate-800/80" />
 
             <CommandGroup heading="Secciones del Portafolio">
               <CommandItem
                 value="ir a porcitech proyecto insignia flagship"
                 onSelect={() => runCommand(() => router.push("/#porcitech"))}
               >
-                <SparklesIcon className="size-4 text-emerald-400" />
+                <SparklesIcon className="size-4 text-cyan-400" />
                 <span>Ir a #porcitech (Proyecto Insignia)</span>
                 <CommandShortcut>#porcitech</CommandShortcut>
               </CommandItem>
@@ -137,7 +137,7 @@ export function CommandMenu() {
                 value="ir a proyectos destacados arquitectura"
                 onSelect={() => runCommand(() => router.push("/#proyectos"))}
               >
-                <FolderGit2Icon className="size-4 text-zinc-400" />
+                <FolderGit2Icon className="size-4 text-indigo-400" />
                 <span>Ir a #proyectos (Proyectos Destacados)</span>
                 <CommandShortcut>#proyectos</CommandShortcut>
               </CommandItem>
@@ -161,7 +161,7 @@ export function CommandMenu() {
                 value="ir a stack tecnologico capas herramientas"
                 onSelect={() => runCommand(() => router.push("/#stack"))}
               >
-                <LayersIcon className="size-4 text-zinc-400" />
+                <LayersIcon className="size-4 text-indigo-400" />
                 <span>Ir a #stack (Capas Tecnológicas)</span>
                 <CommandShortcut>#stack</CommandShortcut>
               </CommandItem>
@@ -175,7 +175,7 @@ export function CommandMenu() {
               </CommandItem>
             </CommandGroup>
 
-            <CommandSeparator className="bg-zinc-800/80" />
+            <CommandSeparator className="bg-slate-800/80" />
 
             <CommandGroup heading="Enlaces y Acciones Rápidas">
               <CommandItem
@@ -187,7 +187,7 @@ export function CommandMenu() {
                 {copied ? (
                   <CheckIcon className="size-4 text-emerald-400" />
                 ) : (
-                  <CopyIcon className="size-4 text-emerald-400" />
+                  <CopyIcon className="size-4 text-cyan-400" />
                 )}
                 <span>
                   {copied
@@ -210,13 +210,13 @@ export function CommandMenu() {
               >
                 <Code2Icon className="size-4 text-cyan-400" />
                 <span>Abrir GitHub (@DevAvirama)</span>
-                <ExternalLinkIcon className="ml-auto size-3.5 text-zinc-500" />
+                <ExternalLinkIcon className="ml-auto size-3.5 text-slate-500" />
               </CommandItem>
               <CommandItem
                 value="inicio home raiz portafolio"
                 onSelect={() => runCommand(() => router.push("/"))}
               >
-                <TerminalIcon className="size-4 text-zinc-400" />
+                <TerminalIcon className="size-4 text-emerald-400" />
                 <span>Volver al inicio (~/santiagoavirama.dev)</span>
               </CommandItem>
             </CommandGroup>

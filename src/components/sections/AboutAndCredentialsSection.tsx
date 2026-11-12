@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import {
   AwardIcon,
   BookMarkedIcon,
@@ -23,24 +26,32 @@ const workingPillars = [
     description:
       "Aplico Arquitectura Hexagonal, separación limpia de dominios y tipado estricto para que el software sea predecible, auditable y fácil de escalar en equipo.",
     icon: WorkflowIcon,
+    accentBar: "from-cyan-400 to-blue-500",
+    iconColor: "border-cyan-500/30 bg-cyan-500/10 text-cyan-400",
   },
   {
     title: "Liderazgo Técnico y Scrum Master",
     description:
       "Experiencia coordinando equipos multidisciplinarios (como en el ecosistema PorciTech), traduciendo requerimientos complejos en entregables iterativos claros.",
     icon: UsersIcon,
+    accentBar: "from-indigo-400 to-violet-500",
+    iconColor: "border-indigo-500/30 bg-indigo-500/10 text-indigo-400",
   },
   {
     title: "Empatía Comercial y Trato con el Cliente",
     description:
       "Formación certificada por IBM y Unicomfacauca en comunicación interpersonal y gestión del servicio, asegurando entendimiento real del negocio antes de escribir código.",
     icon: HandshakeIcon,
+    accentBar: "from-cyan-400 to-indigo-400",
+    iconColor: "border-cyan-500/30 bg-cyan-500/10 text-cyan-300",
   },
   {
     title: "Mentalidad Security-by-Design",
     description:
       "Respaldado como Auditor Interno ISO/IEC 27001:2022 y en Ciberseguridad por Google: validación de entradas, mínimo privilegio en contenedores y protección de datos desde el diseño.",
     icon: ShieldCheckIcon,
+    accentBar: "from-emerald-400 to-cyan-400",
+    iconColor: "border-emerald-500/30 bg-emerald-500/10 text-emerald-400",
   },
 ];
 
@@ -49,53 +60,80 @@ export function AboutAndCredentialsSection() {
     <section
       id="perfil"
       aria-labelledby="perfil-heading"
-      className="scroll-mt-20 border-b border-zinc-800/80 py-20"
+      className="scroll-mt-20 border-b border-slate-800/70 py-20"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-10 space-y-2">
-          <span className="font-mono text-xs font-semibold tracking-wider text-emerald-400 uppercase">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="mb-10 space-y-2"
+        >
+          <span className="font-mono text-xs font-semibold tracking-wider text-cyan-400 uppercase">
             04 // Filosofía de Trabajo & Credenciales Verificables
           </span>
           <h2
             id="perfil-heading"
-            className="text-2xl font-bold tracking-tight text-zinc-100 sm:text-3xl"
+            className="text-2xl font-bold tracking-tight text-white sm:text-3xl"
           >
             Cómo Trabajo y Respaldo Académico
           </h2>
-          <p className="max-w-2xl text-sm text-zinc-400 sm:text-base">
+          <p className="max-w-2xl text-sm text-slate-400 sm:text-base">
             Ingeniería rigurosa combinada con comunicación clara, liderazgo
             colaborativo y estándares internacionales de seguridad de la
             información.
           </p>
-        </div>
+        </motion.div>
 
         <div className="mb-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {workingPillars.map((pillar) => {
+          {workingPillars.map((pillar, index) => {
             const Icon = pillar.icon;
             return (
-              <div
+              <motion.div
                 key={pillar.title}
-                className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{
+                  duration: 0.45,
+                  delay: index * 0.06,
+                  ease: "easeOut",
+                }}
+                className="glass-card glass-card-hover relative overflow-hidden rounded-2xl p-5 pl-6"
               >
-                <div className="mb-3 inline-flex size-9 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-950 text-emerald-400">
+                {/* Barra de acento lateral luminosa */}
+                <span
+                  aria-hidden="true"
+                  className={`absolute top-4 bottom-4 left-0 w-1 rounded-r-full bg-gradient-to-b ${pillar.accentBar} shadow-[0_0_12px_rgba(34,211,238,0.5)]`}
+                />
+                <div
+                  className={`mb-3 inline-flex size-9 items-center justify-center rounded-xl border ${pillar.iconColor}`}
+                >
                   <Icon className="size-4" />
                 </div>
-                <h3 className="mb-2 text-sm font-semibold text-zinc-100">
+                <h3 className="mb-2 text-sm font-semibold text-white">
                   {pillar.title}
                 </h3>
-                <p className="text-xs leading-relaxed text-zinc-400">
+                <p className="text-xs leading-relaxed text-slate-300">
                   {pillar.description}
                 </p>
-              </div>
+              </motion.div>
             );
           })}
         </div>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-          <div className="space-y-8 lg:col-span-5">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="space-y-8 lg:col-span-5"
+          >
             <div className="space-y-4">
-              <h3 className="flex items-center gap-2 font-mono text-xs font-semibold tracking-wider text-zinc-300 uppercase">
-                <GraduationCapIcon className="size-4 text-emerald-400" />
+              <h3 className="flex items-center gap-2 font-mono text-xs font-semibold tracking-wider text-cyan-300 uppercase">
+                <GraduationCapIcon className="size-4 text-cyan-400" />
                 <span>Formación Tecnológica Oficial</span>
               </h3>
 
@@ -103,23 +141,27 @@ export function AboutAndCredentialsSection() {
                 {educationList.map((edu) => (
                   <div
                     key={edu.id}
-                    className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-5"
+                    className="glass-card glass-card-hover relative overflow-hidden rounded-2xl p-5 pl-6"
                   >
+                    <span
+                      aria-hidden="true"
+                      className="absolute top-4 bottom-4 left-0 w-1 rounded-r-full bg-gradient-to-b from-cyan-400 to-indigo-500"
+                    />
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span className="font-mono text-xs text-emerald-400">
+                      <span className="font-mono text-xs text-cyan-400">
                         {edu.period}
                       </span>
                     </div>
-                    <h4 className="mt-1 text-base font-bold text-zinc-100">
+                    <h4 className="mt-1 text-base font-bold text-white">
                       {edu.degree}
                     </h4>
-                    <p className="mt-0.5 text-xs text-zinc-400">
+                    <p className="mt-0.5 text-xs text-slate-400">
                       {edu.institution}
                     </p>
-                    <ul className="mt-3 space-y-1.5 border-t border-zinc-800/80 pt-3 text-xs text-zinc-300">
+                    <ul className="mt-3 space-y-1.5 border-t border-slate-800/80 pt-3 text-xs text-slate-300">
                       {edu.focus.map((item) => (
                         <li key={item} className="flex items-start gap-2">
-                          <span className="mt-1.5 size-1 rounded-full bg-emerald-400" />
+                          <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-cyan-400" />
                           <span>{item}</span>
                         </li>
                       ))}
@@ -130,22 +172,22 @@ export function AboutAndCredentialsSection() {
             </div>
 
             <div className="space-y-4">
-              <h3 className="flex items-center gap-2 font-mono text-xs font-semibold tracking-wider text-zinc-300 uppercase">
-                <BookMarkedIcon className="size-4 text-cyan-400" />
+              <h3 className="flex items-center gap-2 font-mono text-xs font-semibold tracking-wider text-indigo-300 uppercase">
+                <BookMarkedIcon className="size-4 text-indigo-400" />
                 <span>Formación Complementaria & Habilidades Blandas</span>
               </h3>
 
-              <div className="divide-y divide-zinc-800/80 rounded-xl border border-zinc-800 bg-zinc-900/60">
+              <div className="glass-card divide-y divide-slate-800/70 rounded-2xl">
                 {complementaryLearning.map((course) => (
                   <div
                     key={`${course.name}-${course.issuer}`}
-                    className="flex items-center justify-between gap-4 p-4"
+                    className="flex items-center justify-between gap-4 p-4 transition-colors hover:bg-slate-900/40"
                   >
                     <div>
-                      <p className="text-xs font-semibold text-zinc-200">
+                      <p className="text-xs font-semibold text-white">
                         {course.name}
                       </p>
-                      <p className="font-mono text-[11px] text-zinc-400">
+                      <p className="font-mono text-[11px] text-slate-400">
                         {course.issuer} • {course.date}
                       </p>
                     </div>
@@ -154,7 +196,7 @@ export function AboutAndCredentialsSection() {
                         href={course.credentialUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex shrink-0 items-center gap-1 font-mono text-xs text-cyan-400 hover:underline"
+                        className="inline-flex shrink-0 items-center gap-1 font-mono text-xs text-cyan-400 hover:text-cyan-300 hover:underline"
                       >
                         <span>Verificar</span>
                         <ExternalLinkIcon className="size-3" />
@@ -164,10 +206,16 @@ export function AboutAndCredentialsSection() {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="space-y-4 lg:col-span-7">
-            <h3 className="flex items-center gap-2 font-mono text-xs font-semibold tracking-wider text-zinc-300 uppercase">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.55, delay: 0.08, ease: "easeOut" }}
+            className="space-y-4 lg:col-span-7"
+          >
+            <h3 className="flex items-center gap-2 font-mono text-xs font-semibold tracking-wider text-emerald-300 uppercase">
               <AwardIcon className="size-4 text-emerald-400" />
               <span>Certificaciones Internacionales & Gobernanza TI</span>
             </h3>
@@ -176,34 +224,43 @@ export function AboutAndCredentialsSection() {
               {certificationsList.map((cert) => (
                 <div
                   key={cert.id}
-                  className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6 transition-colors hover:border-zinc-700"
+                  className="glass-card glass-card-hover relative overflow-hidden rounded-2xl p-6 pl-7"
                 >
+                  <span
+                    aria-hidden="true"
+                    className={`absolute top-5 bottom-5 left-0 w-1 rounded-r-full ${
+                      cert.status === "verified"
+                        ? "bg-gradient-to-b from-emerald-400 to-cyan-400 shadow-[0_0_12px_rgba(16,185,129,0.5)]"
+                        : "bg-gradient-to-b from-amber-400 to-indigo-400"
+                    }`}
+                  />
+
                   <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-start">
                     <div className="space-y-1">
                       <div className="flex flex-wrap items-center gap-2">
                         {cert.status === "verified" ? (
-                          <Badge className="border border-emerald-500/30 bg-emerald-500/15 font-mono text-[11px] text-emerald-300">
+                          <Badge className="border border-emerald-500/35 bg-emerald-500/15 font-mono text-[11px] text-emerald-300 shadow-[0_0_15px_-3px_rgba(16,185,129,0.3)]">
                             <CheckCircle2Icon className="mr-1 size-3" />
                             Verificada
                           </Badge>
                         ) : (
                           <Badge
                             variant="outline"
-                            className="border-amber-500/30 bg-amber-500/10 font-mono text-[11px] text-amber-300"
+                            className="border-amber-500/35 bg-amber-500/15 font-mono text-[11px] text-amber-300"
                           >
                             <ClockIcon className="mr-1 size-3" />
                             En preparación
                           </Badge>
                         )}
-                        <span className="font-mono text-xs text-zinc-400">
+                        <span className="font-mono text-xs text-cyan-300/90">
                           {cert.category}
                         </span>
                       </div>
 
-                      <h4 className="pt-1 text-base font-bold text-zinc-100 sm:text-lg">
+                      <h4 className="pt-1 text-base font-bold text-white sm:text-lg">
                         {cert.name}
                       </h4>
-                      <p className="font-mono text-xs text-zinc-400">
+                      <p className="font-mono text-xs text-slate-400">
                         {cert.issuer} • {cert.date}
                       </p>
                     </div>
@@ -213,7 +270,7 @@ export function AboutAndCredentialsSection() {
                         href={cert.credentialUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-3 font-mono text-xs font-medium text-cyan-300 transition-colors hover:bg-cyan-500/20"
+                        className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-lg border border-cyan-500/35 bg-cyan-500/10 px-3 font-mono text-xs font-medium text-cyan-300 transition-all hover:border-cyan-400 hover:bg-cyan-500/20 hover:text-white"
                       >
                         <span>Verificar credencial</span>
                         <ExternalLinkIcon className="size-3.5" />
@@ -221,11 +278,11 @@ export function AboutAndCredentialsSection() {
                     )}
                   </div>
 
-                  <div className="mt-4 flex flex-wrap gap-1.5 border-t border-zinc-800/80 pt-4">
+                  <div className="mt-4 flex flex-wrap gap-1.5 border-t border-slate-800/80 pt-4">
                     {cert.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="rounded-md border border-zinc-800 bg-zinc-950 px-2.5 py-1 font-mono text-[11px] text-zinc-300"
+                        className="rounded-md border border-slate-700/80 bg-slate-950/80 px-2.5 py-1 font-mono text-[11px] text-slate-200"
                       >
                         {skill}
                       </span>
@@ -234,7 +291,7 @@ export function AboutAndCredentialsSection() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

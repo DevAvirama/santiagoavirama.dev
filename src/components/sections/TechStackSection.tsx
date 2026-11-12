@@ -1,73 +1,144 @@
-import { LayersIcon } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+"use client";
+
+import { motion } from "framer-motion";
+import {
+  CpuIcon,
+  DatabaseIcon,
+  GlobeIcon,
+  LayersIcon,
+  ServerIcon,
+  ShieldCheckIcon,
+} from "lucide-react";
 import { stackLayers } from "@/data/stack";
+
+function getLayerVisuals(id: string) {
+  if (id.includes("frontend") || id.includes("client")) {
+    return {
+      icon: GlobeIcon,
+      aura: "border-cyan-500/35 bg-cyan-500/15 text-cyan-400 shadow-[0_0_20px_-4px_rgba(34,211,238,0.45)]",
+      pillHover: "hover:border-cyan-400/50 hover:text-cyan-200",
+    };
+  }
+  if (id.includes("backend") || id.includes("api")) {
+    return {
+      icon: ServerIcon,
+      aura: "border-indigo-500/35 bg-indigo-500/15 text-indigo-400 shadow-[0_0_20px_-4px_rgba(129,140,248,0.45)]",
+      pillHover: "hover:border-indigo-400/50 hover:text-indigo-200",
+    };
+  }
+  if (id.includes("data") || id.includes("db")) {
+    return {
+      icon: DatabaseIcon,
+      aura: "border-cyan-500/35 bg-cyan-500/15 text-cyan-300 shadow-[0_0_20px_-4px_rgba(34,211,238,0.4)]",
+      pillHover: "hover:border-cyan-400/50 hover:text-cyan-200",
+    };
+  }
+  if (id.includes("ai") || id.includes("vision") || id.includes("cv")) {
+    return {
+      icon: CpuIcon,
+      aura: "border-indigo-500/35 bg-indigo-500/15 text-indigo-300 shadow-[0_0_20px_-4px_rgba(129,140,248,0.4)]",
+      pillHover: "hover:border-indigo-400/50 hover:text-indigo-200",
+    };
+  }
+  if (id.includes("sec") || id.includes("devops") || id.includes("infra")) {
+    return {
+      icon: ShieldCheckIcon,
+      aura: "border-emerald-500/35 bg-emerald-500/15 text-emerald-400 shadow-[0_0_20px_-4px_rgba(16,185,129,0.45)]",
+      pillHover: "hover:border-emerald-400/50 hover:text-emerald-200",
+    };
+  }
+  return {
+    icon: LayersIcon,
+    aura: "border-cyan-500/35 bg-cyan-500/15 text-cyan-400 shadow-[0_0_20px_-4px_rgba(34,211,238,0.4)]",
+    pillHover: "hover:border-cyan-400/50 hover:text-cyan-200",
+  };
+}
 
 export function TechStackSection() {
   return (
     <section
       id="stack"
       aria-labelledby="stack-heading"
-      className="scroll-mt-20 border-b border-zinc-800/80 py-20"
+      className="scroll-mt-20 border-b border-slate-800/70 py-20"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-10 space-y-2">
-          <span className="font-mono text-xs font-semibold tracking-wider text-emerald-400 uppercase">
-            05 // Capacidades Técnicas por Capa
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="mb-10 space-y-2"
+        >
+          <span className="font-mono text-xs font-semibold tracking-wider text-cyan-400 uppercase">
+            05 // Capacidades Técnicas por Capa (Bento Grid)
           </span>
           <h2
             id="stack-heading"
-            className="text-2xl font-bold tracking-tight text-zinc-100 sm:text-3xl"
+            className="text-2xl font-bold tracking-tight text-white sm:text-3xl"
           >
             Stack Tecnológico y Ecosistema de Ingeniería
           </h2>
-          <p className="max-w-2xl text-sm text-zinc-400 sm:text-base">
+          <p className="max-w-2xl text-sm text-slate-400 sm:text-base">
             Herramientas y tecnologías organizadas por responsabilidad
             arquitectónica, aplicadas en proyectos reales.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {stackLayers.map((layer, index) => (
-            <div
-              key={layer.id}
-              className={`flex flex-col justify-between rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 transition-colors hover:border-zinc-700 ${
-                index === stackLayers.length - 1
-                  ? "md:col-span-2 lg:col-span-1"
-                  : ""
-              }`}
-            >
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="inline-flex size-8 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-950 font-mono text-xs text-emerald-400">
-                    <LayersIcon className="size-4" />
-                  </span>
-                  <span className="font-mono text-[11px] text-zinc-500">
-                    LAYER_0{index + 1}
-                  </span>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-6">
+          {stackLayers.map((layer, index) => {
+            const visuals = getLayerVisuals(layer.id);
+            const LayerIcon = visuals.icon;
+            // Bento Grid: primeras 2 capas ocupan 3 cols (mitad), las siguientes 3 ocupan 2 cols (tercios)
+            const bentoSpan =
+              index < 2 ? "lg:col-span-3" : "lg:col-span-2";
+
+            return (
+              <motion.div
+                key={layer.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{
+                  duration: 0.45,
+                  delay: index * 0.06,
+                  ease: "easeOut",
+                }}
+                className={`glass-card glass-card-hover flex flex-col justify-between rounded-2xl p-6 ${bentoSpan}`}
+              >
+                <div className="space-y-3.5">
+                  <div className="flex items-center justify-between">
+                    <span
+                      className={`inline-flex size-10 items-center justify-center rounded-xl border ${visuals.aura}`}
+                    >
+                      <LayerIcon className="size-4.5" />
+                    </span>
+                    <span className="rounded-md border border-slate-800 bg-slate-950/70 px-2 py-0.5 font-mono text-[11px] text-slate-400">
+                      LAYER_0{index + 1}
+                    </span>
+                  </div>
+
+                  <h3 className="text-lg font-bold text-white">
+                    {layer.title}
+                  </h3>
+
+                  <p className="text-xs leading-relaxed text-slate-300">
+                    {layer.description}
+                  </p>
                 </div>
 
-                <h3 className="text-lg font-bold text-zinc-100">
-                  {layer.title}
-                </h3>
-
-                <p className="text-xs leading-relaxed text-zinc-400">
-                  {layer.description}
-                </p>
-              </div>
-
-              <div className="mt-6 flex flex-wrap gap-1.5 border-t border-zinc-800/80 pt-4">
-                {layer.items.map((item) => (
-                  <Badge
-                    key={item}
-                    variant="outline"
-                    className="border-zinc-800 bg-zinc-950/90 font-mono text-[11px] text-zinc-200"
-                  >
-                    {item}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          ))}
+                <div className="mt-6 flex flex-wrap gap-1.5 border-t border-slate-800/80 pt-4">
+                  {layer.items.map((item) => (
+                    <span
+                      key={item}
+                      className={`rounded-lg border border-slate-700/80 bg-slate-950/85 px-2.5 py-1 font-mono text-[11px] text-slate-200 transition-colors ${visuals.pillHover}`}
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

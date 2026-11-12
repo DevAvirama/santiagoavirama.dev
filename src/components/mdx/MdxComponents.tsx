@@ -18,7 +18,7 @@ function extractTextFromChildren(node: React.ReactNode): string {
 export const mdxComponents: NonNullable<MDXRemoteProps["components"]> = {
   h2: ({ children, ...props }: React.ComponentPropsWithoutRef<"h2">) => (
     <h2
-      className="mt-12 mb-4 border-b border-zinc-800 pb-3 text-2xl font-bold tracking-tight text-zinc-100 first:mt-0"
+      className="mt-12 mb-4 border-b border-slate-800/80 pb-3 text-2xl font-bold tracking-tight text-white first:mt-0"
       {...props}
     >
       {children}
@@ -26,20 +26,20 @@ export const mdxComponents: NonNullable<MDXRemoteProps["components"]> = {
   ),
   h3: ({ children, ...props }: React.ComponentPropsWithoutRef<"h3">) => (
     <h3
-      className="mt-8 mb-3 text-lg font-semibold tracking-tight text-emerald-400"
+      className="mt-8 mb-3 text-lg font-semibold tracking-tight text-cyan-400"
       {...props}
     >
       {children}
     </h3>
   ),
   p: ({ children, ...props }: React.ComponentPropsWithoutRef<"p">) => (
-    <p className="my-4 text-base leading-relaxed text-zinc-300" {...props}>
+    <p className="my-4 text-base leading-relaxed text-slate-300" {...props}>
       {children}
     </p>
   ),
   ul: ({ children, ...props }: React.ComponentPropsWithoutRef<"ul">) => (
     <ul
-      className="my-4 list-disc space-y-2 pl-6 text-base leading-relaxed text-zinc-300 marker:text-emerald-400"
+      className="my-4 list-disc space-y-2 pl-6 text-base leading-relaxed text-slate-300 marker:text-cyan-400"
       {...props}
     >
       {children}
@@ -47,14 +47,14 @@ export const mdxComponents: NonNullable<MDXRemoteProps["components"]> = {
   ),
   ol: ({ children, ...props }: React.ComponentPropsWithoutRef<"ol">) => (
     <ol
-      className="my-4 list-decimal space-y-2 pl-6 text-base leading-relaxed text-zinc-300 marker:font-mono marker:text-emerald-400"
+      className="my-4 list-decimal space-y-2 pl-6 text-base leading-relaxed text-slate-300 marker:font-mono marker:text-cyan-400"
       {...props}
     >
       {children}
     </ol>
   ),
   li: ({ children, ...props }: React.ComponentPropsWithoutRef<"li">) => (
-    <li className="pl-1 leading-relaxed text-zinc-300" {...props}>
+    <li className="pl-1 leading-relaxed text-slate-300" {...props}>
       {children}
     </li>
   ),
@@ -62,7 +62,7 @@ export const mdxComponents: NonNullable<MDXRemoteProps["components"]> = {
     children,
     ...props
   }: React.ComponentPropsWithoutRef<"strong">) => (
-    <strong className="font-semibold text-zinc-100" {...props}>
+    <strong className="font-semibold text-white" {...props}>
       {children}
     </strong>
   ),
@@ -90,14 +90,14 @@ export const mdxComponents: NonNullable<MDXRemoteProps["components"]> = {
     ...props
   }: React.ComponentPropsWithoutRef<"blockquote">) => (
     <blockquote
-      className="my-6 rounded-r-xl border-l-2 border-emerald-400 bg-zinc-900/60 py-3 pr-4 pl-4 text-sm italic text-zinc-300"
+      className="my-6 rounded-r-2xl border-l-2 border-cyan-400 bg-slate-900/60 py-3 pr-4 pl-4 text-sm italic text-slate-300 backdrop-blur-md"
       {...props}
     >
       {children}
     </blockquote>
   ),
   table: ({ children, ...props }: React.ComponentPropsWithoutRef<"table">) => (
-    <div className="my-6 overflow-x-auto rounded-xl border border-zinc-800">
+    <div className="my-6 overflow-x-auto rounded-2xl border border-slate-800/90 bg-slate-900/45 backdrop-blur-md">
       <table className="w-full border-collapse text-left text-sm" {...props}>
         {children}
       </table>
@@ -105,7 +105,7 @@ export const mdxComponents: NonNullable<MDXRemoteProps["components"]> = {
   ),
   thead: ({ children, ...props }: React.ComponentPropsWithoutRef<"thead">) => (
     <thead
-      className="border-b border-zinc-800 bg-zinc-900/80 font-mono text-xs text-zinc-300"
+      className="border-b border-slate-800 bg-slate-950/80 font-mono text-xs text-cyan-300"
       {...props}
     >
       {children}
@@ -118,7 +118,7 @@ export const mdxComponents: NonNullable<MDXRemoteProps["components"]> = {
   ),
   td: ({ children, ...props }: React.ComponentPropsWithoutRef<"td">) => (
     <td
-      className="border-t border-zinc-800/70 px-4 py-3 text-zinc-300"
+      className="border-t border-slate-800/70 px-4 py-3 text-slate-300"
       {...props}
     >
       {children}
@@ -139,7 +139,7 @@ export const mdxComponents: NonNullable<MDXRemoteProps["components"]> = {
 
     return (
       <pre
-        className="my-6 overflow-x-auto rounded-xl border border-zinc-800 bg-zinc-900/90 p-4 font-mono text-xs leading-relaxed text-zinc-200"
+        className="my-6 overflow-x-auto rounded-2xl border border-slate-800/90 bg-slate-950/90 p-4 font-mono text-xs leading-relaxed text-slate-200 shadow-inner"
         {...props}
       >
         {children}
@@ -169,7 +169,7 @@ export const mdxComponents: NonNullable<MDXRemoteProps["components"]> = {
 
     return (
       <code
-        className="rounded border border-zinc-800 bg-zinc-900 px-1.5 py-0.5 font-mono text-[0.85em] text-emerald-300"
+        className="rounded border border-cyan-500/25 bg-cyan-500/10 px-1.5 py-0.5 font-mono text-[0.85em] text-cyan-300"
         {...props}
       >
         {children}

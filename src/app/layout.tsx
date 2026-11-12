@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { AmbientBackground } from "@/components/layout/AmbientBackground";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
@@ -75,9 +76,10 @@ export default function RootLayout({
       lang="es"
       className={`dark ${inter.variable} ${jetbrainsMono.variable} h-full scroll-smooth`}
     >
-      <body className="flex min-h-screen flex-col bg-zinc-950 font-sans text-zinc-100 antialiased">
+      <body className="relative flex min-h-screen flex-col bg-slate-950 font-sans text-slate-100 antialiased">
+        <AmbientBackground />
         <Navbar />
-        <main id="contenido-principal" className="flex-1">
+        <main id="contenido-principal" className="relative z-10 flex-1">
           {children}
         </main>
         <Footer />

@@ -49,11 +49,11 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
 
   if (hasError) {
     return (
-      <div className="my-6 rounded-xl border border-zinc-800 bg-zinc-900/80 p-4">
+      <div className="glass-card my-6 rounded-2xl p-4">
         <p className="mb-2 font-mono text-xs text-amber-400">
           Diagrama de arquitectura (Mermaid):
         </p>
-        <pre className="overflow-x-auto font-mono text-xs text-zinc-300">
+        <pre className="overflow-x-auto font-mono text-xs text-slate-300">
           <code>{chart}</code>
         </pre>
       </div>
@@ -61,12 +61,12 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
   }
 
   return (
-    <figure className="my-8 overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 sm:p-6">
-      <div className="mb-3 flex items-center justify-between border-b border-zinc-800/80 pb-2.5 font-mono text-xs text-zinc-400">
-        <span className="text-emerald-400">
+    <figure className="glass-card my-8 overflow-hidden rounded-2xl p-4 sm:p-6">
+      <div className="mb-3 flex items-center justify-between border-b border-slate-800/80 pb-2.5 font-mono text-xs text-slate-400">
+        <span className="text-cyan-400">
           {"// Diagrama de Arquitectura del Sistema"}
         </span>
-        <span>Mermaid.js</span>
+        <span className="text-indigo-300">Mermaid.js</span>
       </div>
       {svgContent ? (
         <div
@@ -74,7 +74,7 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
           dangerouslySetInnerHTML={{ __html: svgContent }}
         />
       ) : (
-        <div className="flex h-48 items-center justify-center font-mono text-xs text-zinc-500">
+        <div className="flex h-48 items-center justify-center font-mono text-xs text-slate-400">
           Renderizando diagrama de arquitectura...
         </div>
       )}

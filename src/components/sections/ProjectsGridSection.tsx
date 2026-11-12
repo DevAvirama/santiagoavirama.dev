@@ -1,137 +1,179 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 import {
   ArrowUpRightIcon,
   BookOpenIcon,
   CheckIcon,
   Code2Icon,
+  CpuIcon,
   GlobeIcon,
   LockIcon,
+  ServerIcon,
+  ShieldCheckIcon,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { featuredProjects } from "@/data/projects";
+
+function getProjectCategoryIcon(id: string) {
+  if (id.includes("doc-scan")) return CpuIcon;
+  if (id.includes("inclusion")) return ShieldCheckIcon;
+  if (id.includes("api")) return ServerIcon;
+  return GlobeIcon;
+}
 
 export function ProjectsGridSection() {
   return (
     <section
       id="proyectos"
       aria-labelledby="proyectos-heading"
-      className="scroll-mt-20 border-b border-zinc-800/80 py-20"
+      className="scroll-mt-20 border-b border-slate-800/70 py-20"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-10 flex flex-col gap-2">
-          <span className="font-mono text-xs font-semibold tracking-wider text-emerald-400 uppercase">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="mb-10 flex flex-col gap-2"
+        >
+          <span className="font-mono text-xs font-semibold tracking-wider text-cyan-400 uppercase">
             02 // Arquitecturas & Soluciones Entregadas
           </span>
           <h2
             id="proyectos-heading"
-            className="text-2xl font-bold tracking-tight text-zinc-100 sm:text-3xl"
+            className="text-2xl font-bold tracking-tight text-white sm:text-3xl"
           >
             Proyectos Destacados y Casos Reales
           </h2>
-          <p className="max-w-2xl text-sm text-zinc-400 sm:text-base">
+          <p className="max-w-2xl text-sm text-slate-400 sm:text-base">
             Selección curada de microservicios, plataformas institucionales
             accesibles, APIs en producción y entregas a clientes reales.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {featuredProjects.map((project) => (
-            <article
-              key={project.id}
-              className="flex flex-col justify-between rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 transition-colors hover:border-zinc-700"
-            >
-              <div className="space-y-4">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <Badge
-                    variant="outline"
-                    className={
-                      project.tier === "client"
-                        ? "border-cyan-500/30 bg-cyan-500/10 font-mono text-cyan-300"
-                        : "border-emerald-500/30 bg-emerald-500/10 font-mono text-emerald-300"
-                    }
-                  >
-                    {project.status}
-                  </Badge>
-                  <span className="font-mono text-xs text-zinc-400">
-                    {project.role}
-                  </span>
-                </div>
-
-                <h3 className="text-lg font-bold text-zinc-100 sm:text-xl">
-                  {project.title}
-                </h3>
-
-                <p className="text-sm leading-relaxed text-zinc-300">
-                  {project.summary}
-                </p>
-
-                <ul className="space-y-2 border-t border-zinc-800/80 pt-4 text-xs leading-relaxed text-zinc-300">
-                  {project.highlights.map((highlight) => (
-                    <li key={highlight} className="flex items-start gap-2">
-                      <CheckIcon className="mt-0.5 size-3.5 shrink-0 text-emerald-400" />
-                      <span>{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="mt-6 space-y-4 border-t border-zinc-800/80 pt-4">
-                <div className="flex flex-wrap gap-1.5">
-                  {project.stack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-md border border-zinc-800 bg-zinc-950 px-2 py-0.5 font-mono text-[11px] text-zinc-300"
-                    >
-                      {tech}
+          {featuredProjects.map((project, index) => {
+            const CategoryIcon = getProjectCategoryIcon(project.id);
+            return (
+              <motion.article
+                key={project.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -4 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{
+                  duration: 0.45,
+                  delay: index * 0.06,
+                  ease: "easeOut",
+                }}
+                className="glass-card glass-card-hover flex flex-col justify-between rounded-2xl p-6"
+              >
+                <div className="space-y-4">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className="inline-flex size-8 items-center justify-center rounded-lg border border-cyan-500/30 bg-cyan-500/10 text-cyan-400">
+                        <CategoryIcon className="size-4" />
+                      </span>
+                      <Badge
+                        variant="outline"
+                        className={
+                          project.tier === "client"
+                            ? "border-indigo-500/35 bg-indigo-500/15 font-mono text-indigo-300"
+                            : "border-emerald-500/35 bg-emerald-500/15 font-mono text-emerald-300"
+                        }
+                      >
+                        {project.status}
+                      </Badge>
+                    </div>
+                    <span className="font-mono text-xs text-slate-400">
+                      {project.role}
                     </span>
-                  ))}
+                  </div>
+
+                  <h3 className="text-lg font-bold text-white sm:text-xl">
+                    {project.title}
+                  </h3>
+
+                  <p className="text-sm leading-relaxed text-slate-300">
+                    {project.summary}
+                  </p>
+
+                  <ul className="space-y-2 border-t border-slate-800/80 pt-4 text-xs leading-relaxed text-slate-300">
+                    {project.highlights.map((highlight) => (
+                      <li key={highlight} className="flex items-start gap-2">
+                        <CheckIcon className="mt-0.5 size-3.5 shrink-0 text-cyan-400" />
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3 pt-1">
-                  {project.caseStudySlug && (
-                    <Link
-                      href={`/proyectos/${project.caseStudySlug}`}
-                      className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-500/15 px-3 py-1.5 font-mono text-xs font-semibold text-emerald-300 ring-1 ring-emerald-500/30 transition-colors hover:bg-emerald-500/25"
-                    >
-                      <BookOpenIcon className="size-3.5" />
-                      <span>Caso de Estudio MDX</span>
-                    </Link>
-                  )}
+                <div className="mt-6 space-y-4 border-t border-slate-800/80 pt-4">
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.stack.map((tech, idx) => (
+                      <span
+                        key={tech}
+                        className={`rounded-md border px-2 py-0.5 font-mono text-[11px] ${
+                          idx % 3 === 0
+                            ? "border-cyan-500/25 bg-cyan-500/10 text-cyan-200"
+                            : idx % 3 === 1
+                              ? "border-indigo-500/25 bg-indigo-500/10 text-indigo-200"
+                              : "border-slate-700/80 bg-slate-950/80 text-slate-300"
+                        }`}
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
 
-                  {project.repoUrl ? (
-                    <a
-                      href={project.repoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-cyan-400 transition-colors hover:text-cyan-300 hover:underline"
-                    >
-                      <Code2Icon className="size-3.5" />
-                      <span>Repositorio GitHub</span>
-                      <ArrowUpRightIcon className="size-3.5" />
-                    </a>
-                  ) : (
-                    <span className="inline-flex items-center gap-1.5 rounded-md border border-zinc-800 bg-zinc-950/60 px-2.5 py-1 font-mono text-[11px] text-zinc-400">
-                      <LockIcon className="size-3 text-zinc-500" />
-                      <span>Repositorio Institucional CTPI SENA</span>
-                    </span>
-                  )}
+                  <div className="flex flex-wrap items-center gap-3 pt-1">
+                    {project.caseStudySlug && (
+                      <Link
+                        href={`/proyectos/${project.caseStudySlug}`}
+                        className="inline-flex items-center gap-1.5 rounded-lg bg-cyan-500/15 px-3 py-1.5 font-mono text-xs font-semibold text-cyan-300 ring-1 ring-cyan-500/35 transition-all hover:bg-cyan-500/25 hover:text-white"
+                      >
+                        <BookOpenIcon className="size-3.5" />
+                        <span>Caso de Estudio MDX</span>
+                      </Link>
+                    )}
 
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-emerald-400 transition-colors hover:text-emerald-300 hover:underline"
-                    >
-                      <GlobeIcon className="size-3.5" />
-                      <span>Servicio en Producción</span>
-                      <ArrowUpRightIcon className="size-3.5" />
-                    </a>
-                  )}
+                    {project.repoUrl ? (
+                      <a
+                        href={project.repoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-cyan-400 transition-colors hover:text-cyan-300 hover:underline"
+                      >
+                        <Code2Icon className="size-3.5" />
+                        <span>Repositorio GitHub</span>
+                        <ArrowUpRightIcon className="size-3.5" />
+                      </a>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 rounded-md border border-slate-800 bg-slate-950/70 px-2.5 py-1 font-mono text-[11px] text-slate-400">
+                        <LockIcon className="size-3 text-slate-500" />
+                        <span>Repositorio Institucional CTPI SENA</span>
+                      </span>
+                    )}
+
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-emerald-400 transition-colors hover:text-emerald-300 hover:underline"
+                      >
+                        <GlobeIcon className="size-3.5" />
+                        <span>Servicio en Producción</span>
+                        <ArrowUpRightIcon className="size-3.5" />
+                      </a>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
+              </motion.article>
+            );
+          })}
         </div>
       </div>
     </section>

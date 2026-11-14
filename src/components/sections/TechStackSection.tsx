@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import {
   CpuIcon,
   DatabaseIcon,
@@ -10,6 +7,13 @@ import {
   ShieldCheckIcon,
 } from "lucide-react";
 import { stackLayers } from "@/data/stack";
+import { Reveal } from "@/components/motion/Reveal";
+import { HoverCard } from "@/components/motion/HoverCard";
+import { TechBadge } from "@/components/motion/TechBadge";
+import {
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/motion/StaggerContainer";
 
 function getLayerVisuals(id: string) {
   if (id.includes("frontend") || id.includes("client")) {
@@ -17,6 +21,7 @@ function getLayerVisuals(id: string) {
       icon: GlobeIcon,
       aura: "border-cyan-500/35 bg-cyan-500/15 text-cyan-400 shadow-[0_0_20px_-4px_rgba(34,211,238,0.45)]",
       pillHover: "hover:border-cyan-400/50 hover:text-cyan-200",
+      glow: "cyan" as const,
     };
   }
   if (id.includes("backend") || id.includes("api")) {
@@ -24,6 +29,7 @@ function getLayerVisuals(id: string) {
       icon: ServerIcon,
       aura: "border-indigo-500/35 bg-indigo-500/15 text-indigo-400 shadow-[0_0_20px_-4px_rgba(129,140,248,0.45)]",
       pillHover: "hover:border-indigo-400/50 hover:text-indigo-200",
+      glow: "indigo" as const,
     };
   }
   if (id.includes("data") || id.includes("db")) {
@@ -31,6 +37,7 @@ function getLayerVisuals(id: string) {
       icon: DatabaseIcon,
       aura: "border-cyan-500/35 bg-cyan-500/15 text-cyan-300 shadow-[0_0_20px_-4px_rgba(34,211,238,0.4)]",
       pillHover: "hover:border-cyan-400/50 hover:text-cyan-200",
+      glow: "cyan" as const,
     };
   }
   if (id.includes("ai") || id.includes("vision") || id.includes("cv")) {
@@ -38,6 +45,7 @@ function getLayerVisuals(id: string) {
       icon: CpuIcon,
       aura: "border-indigo-500/35 bg-indigo-500/15 text-indigo-300 shadow-[0_0_20px_-4px_rgba(129,140,248,0.4)]",
       pillHover: "hover:border-indigo-400/50 hover:text-indigo-200",
+      glow: "indigo" as const,
     };
   }
   if (id.includes("sec") || id.includes("devops") || id.includes("infra")) {
@@ -45,12 +53,14 @@ function getLayerVisuals(id: string) {
       icon: ShieldCheckIcon,
       aura: "border-emerald-500/35 bg-emerald-500/15 text-emerald-400 shadow-[0_0_20px_-4px_rgba(16,185,129,0.45)]",
       pillHover: "hover:border-emerald-400/50 hover:text-emerald-200",
+      glow: "emerald" as const,
     };
   }
   return {
     icon: LayersIcon,
     aura: "border-cyan-500/35 bg-cyan-500/15 text-cyan-400 shadow-[0_0_20px_-4px_rgba(34,211,238,0.4)]",
     pillHover: "hover:border-cyan-400/50 hover:text-cyan-200",
+    glow: "cyan" as const,
   };
 }
 
@@ -62,13 +72,7 @@ export function TechStackSection() {
       className="scroll-mt-20 border-b border-slate-800/70 py-20"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ y: 12 }}
-          whileInView={{ y: 0 }}
-          viewport={{ once: true, amount: 0.05 }}
-          transition={{ duration: 0.45, ease: "easeOut" }}
-          className="mb-10 space-y-2"
-        >
+        <Reveal className="mb-10 space-y-2">
           <span className="font-mono text-xs font-semibold tracking-wider text-cyan-400 uppercase">
             05 // Capacidades Técnicas por Capa (Bento Grid)
           </span>
@@ -82,9 +86,13 @@ export function TechStackSection() {
             Herramientas y tecnologías organizadas por responsabilidad
             arquitectónica, aplicadas en proyectos reales.
           </p>
-        </motion.div>
+        </Reveal>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-6">
+        {/* Cascada LAYER_01 → LAYER_05 */}
+        <StaggerContainer
+          stagger={0.09}
+          className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-6"
+        >
           {stackLayers.map((layer, index) => {
             const visuals = getLayerVisuals(layer.id);
             const LayerIcon = visuals.icon;
@@ -92,53 +100,47 @@ export function TechStackSection() {
               index < 2 ? "lg:col-span-3" : "lg:col-span-2";
 
             return (
-              <motion.div
-                key={layer.id}
-                initial={{ y: 12 }}
-                whileInView={{ y: 0 }}
-                viewport={{ once: true, amount: 0.05 }}
-                transition={{
-                  duration: 0.4,
-                  delay: index * 0.04,
-                  ease: "easeOut",
-                }}
-                className={`glass-card glass-card-hover flex flex-col justify-between rounded-2xl p-6 ${bentoSpan}`}
-              >
-                <div className="space-y-3.5">
-                  <div className="flex items-center justify-between">
-                    <span
-                      className={`inline-flex size-10 items-center justify-center rounded-xl border ${visuals.aura}`}
-                    >
-                      <LayerIcon className="size-4.5" />
-                    </span>
-                    <span className="rounded-md border border-slate-800 bg-slate-950/70 px-2 py-0.5 font-mono text-[11px] text-slate-400">
-                      LAYER_0{index + 1}
-                    </span>
+              <StaggerItem key={layer.id} className={bentoSpan}>
+                <HoverCard
+                  glow={visuals.glow}
+                  className="glass-card glass-card-hover flex flex-col justify-between rounded-2xl p-6"
+                >
+                  <div className="space-y-3.5">
+                    <div className="flex items-center justify-between">
+                      <span
+                        className={`inline-flex size-10 items-center justify-center rounded-xl border ${visuals.aura}`}
+                      >
+                        <LayerIcon className="size-4.5" />
+                      </span>
+                      <span className="rounded-md border border-slate-800 bg-slate-950/70 px-2 py-0.5 font-mono text-[11px] text-slate-400">
+                        LAYER_0{index + 1}
+                      </span>
+                    </div>
+
+                    <h3 className="text-lg font-bold text-white">
+                      {layer.title}
+                    </h3>
+
+                    <p className="text-xs leading-relaxed text-slate-300">
+                      {layer.description}
+                    </p>
                   </div>
 
-                  <h3 className="text-lg font-bold text-white">
-                    {layer.title}
-                  </h3>
-
-                  <p className="text-xs leading-relaxed text-slate-300">
-                    {layer.description}
-                  </p>
-                </div>
-
-                <div className="mt-6 flex flex-wrap gap-1.5 border-t border-slate-800/80 pt-4">
-                  {layer.items.map((item) => (
-                    <span
-                      key={item}
-                      className={`rounded-lg border border-slate-700/80 bg-slate-950/85 px-2.5 py-1 font-mono text-[11px] text-slate-200 transition-colors ${visuals.pillHover}`}
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
+                  <div className="mt-6 flex flex-wrap gap-1.5 border-t border-slate-800/80 pt-4">
+                    {layer.items.map((item) => (
+                      <TechBadge
+                        key={item}
+                        className={`rounded-lg border border-slate-700/80 bg-slate-950/85 px-2.5 py-1 font-mono text-[11px] text-slate-200 transition-colors ${visuals.pillHover}`}
+                      >
+                        {item}
+                      </TechBadge>
+                    ))}
+                  </div>
+                </HoverCard>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );

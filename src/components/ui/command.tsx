@@ -4,18 +4,15 @@ import * as React from "react"
 import { Command as CommandPrimitive } from "cmdk"
 import { cn } from "cn"
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
+import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
+import { AnimatePresence, motion, type Transition } from "framer-motion"
+
+import { Button } from "@/components/ui/button"
 import {
   InputGroup,
   InputGroupAddon,
 } from "@/components/ui/input-group"
-import { SearchIcon, CheckIcon } from "lucide-react"
+import { SearchIcon, CheckIcon, XIcon } from "lucide-react"
 
 function Command({
   className,
@@ -33,14 +30,27 @@ function Command({
   )
 }
 
+const dialogTransition: Transition = {
+  duration: 0.35,
+  ease: [0.22, 1, 0.36, 1],
+}
+
+/**
+ * Paleta de comandos con transición de apertura/cierre en Framer Motion.
+ * Patrón Base UI + Motion: `AnimatePresence` + `Portal keepMounted` +
+ * `render={<motion.div />}` para que la salida termine antes de desmontar.
+ * Solo anima `opacity` y `transform` (y / scale).
+ */
 function CommandDialog({
   title = "Command Palette",
   description = "Search for a command to run...",
   children,
   className,
   showCloseButton = false,
+  open,
   ...props
-}: Omit<React.ComponentProps<typeof Dialog>, "children"> & {
+}: Omit<DialogPrimitive.Root.Props, "children" | "open"> & {
+  open: boolean
   title?: string
   description?: string
   className?: string
@@ -48,21 +58,64 @@ function CommandDialog({
   children: React.ReactNode
 }) {
   return (
-    <Dialog {...props}>
-      <DialogHeader className="sr-only">
-        <DialogTitle>{title}</DialogTitle>
-        <DialogDescription>{description}</DialogDescription>
-      </DialogHeader>
-      <DialogContent
-        className={cn(
-          "top-1/3 translate-y-0 overflow-hidden rounded-xl! p-0",
-          className
+    <DialogPrimitive.Root open={open} {...props}>
+      <AnimatePresence>
+        {open && (
+          <DialogPrimitive.Portal keepMounted data-slot="dialog-portal">
+            <DialogPrimitive.Backdrop
+              data-slot="dialog-overlay"
+              className="fixed inset-0 isolate z-50 bg-black/40 supports-backdrop-filter:backdrop-blur-xs"
+              render={
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={dialogTransition}
+                />
+              }
+            />
+            <DialogPrimitive.Popup
+              data-slot="dialog-content"
+              className={cn(
+                "fixed top-1/3 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 gap-4 overflow-hidden rounded-xl! bg-popover p-0 text-sm text-popover-foreground ring-1 ring-foreground/10 outline-none sm:max-w-sm",
+                className
+              )}
+              render={
+                <motion.div
+                  initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                  transition={dialogTransition}
+                />
+              }
+            >
+              <DialogPrimitive.Title className="sr-only">
+                {title}
+              </DialogPrimitive.Title>
+              <DialogPrimitive.Description className="sr-only">
+                {description}
+              </DialogPrimitive.Description>
+              {children}
+              {showCloseButton && (
+                <DialogPrimitive.Close
+                  data-slot="dialog-close"
+                  render={
+                    <Button
+                      variant="ghost"
+                      className="absolute top-2 right-2"
+                      size="icon-sm"
+                    />
+                  }
+                >
+                  <XIcon />
+                  <span className="sr-only">Close</span>
+                </DialogPrimitive.Close>
+              )}
+            </DialogPrimitive.Popup>
+          </DialogPrimitive.Portal>
         )}
-        showCloseButton={showCloseButton}
-      >
-        {children}
-      </DialogContent>
-    </Dialog>
+      </AnimatePresence>
+    </DialogPrimitive.Root>
   )
 }
 

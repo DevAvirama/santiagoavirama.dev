@@ -4,6 +4,7 @@ import { AmbientBackground } from "@/components/layout/AmbientBackground";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { MotionProvider } from "@/components/motion/MotionProvider";
 import "./globals.css";
 
 const inter = Inter({
@@ -133,12 +134,14 @@ export default function RootLayout({
     >
       <body className="relative flex min-h-screen flex-col bg-slate-950 font-sans text-slate-100 antialiased">
         <JsonLd data={rootStructuredData} />
-        <AmbientBackground />
-        <Navbar />
-        <main id="contenido-principal" className="relative z-10 flex-1">
-          {children}
-        </main>
-        <Footer />
+        <MotionProvider>
+          <AmbientBackground />
+          <Navbar />
+          <main id="contenido-principal" className="relative z-10 flex-1">
+            {children}
+          </main>
+          <Footer />
+        </MotionProvider>
       </body>
     </html>
   );

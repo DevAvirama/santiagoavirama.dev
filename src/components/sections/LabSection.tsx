@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import {
   ArrowUpRightIcon,
   CalendarIcon,
@@ -10,6 +7,13 @@ import {
   TerminalIcon,
 } from "lucide-react";
 import type { LabRepository } from "@/types/github";
+import { Reveal } from "@/components/motion/Reveal";
+import { StatusPulse } from "@/components/motion/StatusPulse";
+import { TerminalCursor } from "@/components/motion/TerminalCursor";
+import {
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/motion/StaggerContainer";
 
 interface LabSectionProps {
   repositories: LabRepository[];
@@ -35,11 +39,7 @@ export function LabSection({ repositories }: LabSectionProps) {
       className="scroll-mt-20 border-b border-slate-800/70 py-20"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ y: 12 }}
-          whileInView={{ y: 0 }}
-          viewport={{ once: true, amount: 0.05 }}
-          transition={{ duration: 0.45, ease: "easeOut" }}
+        <Reveal
           className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end"
         >
           <div className="space-y-2">
@@ -71,14 +71,11 @@ export function LabSection({ repositories }: LabSectionProps) {
             <span>Ver todos los repositorios</span>
             <ArrowUpRightIcon className="size-3.5" />
           </a>
-        </motion.div>
+        </Reveal>
 
-        <motion.div
-          initial={{ y: 12 }}
-          whileInView={{ y: 0 }}
-          viewport={{ once: true, amount: 0.05 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="glass-card overflow-hidden rounded-2xl"
+        <Reveal
+          duration={0.55}
+          className="glass-card glass-card-hover overflow-hidden rounded-2xl"
         >
           <div className="flex items-center justify-between border-b border-slate-800/80 bg-slate-950/90 px-4 py-3 font-mono text-xs text-slate-400">
             <div className="flex items-center gap-2">
@@ -89,19 +86,24 @@ export function LabSection({ repositories }: LabSectionProps) {
                 <span className="text-cyan-400">santiago@archlinux</span>:
                 <span className="text-indigo-400">~/lab</span>$ gh repo list
                 --topic portfolio-lab
+                <TerminalCursor className="hidden sm:inline-block" />
               </span>
             </div>
             <span className="hidden items-center gap-1.5 text-emerald-400 sm:inline-flex">
-              <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+              <StatusPulse />
               {repositories.length} repo(s) activos
             </span>
           </div>
 
           {repositories.length > 0 ? (
-            <div className="divide-y divide-slate-800/70">
+            <StaggerContainer
+              stagger={0.06}
+              className="divide-y divide-slate-800/70"
+            >
               {repositories.map((repo) => (
-                <div
+                <StaggerItem
                   key={repo.id}
+                  y={8}
                   className="flex flex-col justify-between gap-4 p-5 transition-colors hover:bg-slate-900/60 sm:flex-row sm:items-center sm:px-6"
                 >
                   <div className="space-y-2">
@@ -171,9 +173,9 @@ export function LabSection({ repositories }: LabSectionProps) {
                       <ArrowUpRightIcon className="size-3.5" />
                     </a>
                   </div>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           ) : (
             <div className="flex flex-col items-center justify-center gap-3 p-10 text-center">
               <TerminalIcon className="size-6 text-cyan-400" />
@@ -193,7 +195,7 @@ export function LabSection({ repositories }: LabSectionProps) {
               </a>
             </div>
           )}
-        </motion.div>
+        </Reveal>
       </div>
     </section>
   );

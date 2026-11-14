@@ -1,23 +1,25 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "framer-motion";
 import {
   ArrowRightIcon,
   Code2Icon,
-  CommandIcon,
   MailIcon,
   ShieldCheckIcon,
   SparklesIcon,
   TerminalIcon,
 } from "lucide-react";
 import { CodeShowcaseCard } from "@/components/sections/CodeShowcaseCard";
+import { CommandPaletteTrigger } from "@/components/layout/CommandPaletteTrigger";
+import { StatusPulse } from "@/components/motion/StatusPulse";
+import {
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/motion/StaggerContainer";
 
+/**
+ * Server Component: todo el texto se emite en el HTML del SSR.
+ * Las animaciones viven en wrappers cliente ligeros (motion/*).
+ */
 export function HeroSection() {
-  const triggerCommandPalette = () => {
-    window.dispatchEvent(new CustomEvent("open-command-menu"));
-  };
-
   return (
     <section
       aria-labelledby="hero-heading"
@@ -25,22 +27,29 @@ export function HeroSection() {
     >
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
-          {/* Columna izquierda (7 cols) - 100% visible desde SSR para LCP óptimo */}
-          <motion.div
-            initial={{ y: 0 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
+          {/*
+            Columna izquierda (7 cols): entrada escalonada al montar.
+            Los bloques de texto grandes (candidatos a LCP) solo animan
+            transform (fade={false}) para quedar 100% visibles desde el SSR.
+          */}
+          <StaggerContainer
+            trigger="mount"
+            stagger={0.07}
+            delayChildren={0.05}
             className="space-y-6 lg:col-span-7"
           >
-            <div className="inline-flex items-center gap-2.5 rounded-full border border-cyan-500/30 bg-slate-900/70 px-3.5 py-1.5 font-mono text-xs text-cyan-200 shadow-[0_0_20px_-5px_rgba(56,189,248,0.3)] backdrop-blur-md">
-              <span className="size-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)] animate-pulse" />
+            <StaggerItem
+              y={10}
+              className="inline-flex items-center gap-2.5 rounded-full border border-cyan-500/30 bg-slate-900/70 px-3.5 py-1.5 font-mono text-xs text-cyan-200 shadow-[0_0_20px_-5px_rgba(56,189,248,0.3)] backdrop-blur-md"
+            >
+              <StatusPulse />
               <span>
                 ~/santiagoavirama.dev • Disponible para ingeniería y proyectos a
                 medida
               </span>
-            </div>
+            </StaggerItem>
 
-            <div className="space-y-3">
+            <StaggerItem fade={false} className="space-y-3">
               <h1
                 id="hero-heading"
                 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl"
@@ -54,17 +63,21 @@ export function HeroSection() {
                   Arquitecturas Web, IA y Seguridad desde el Diseño
                 </span>
               </p>
-            </div>
+            </StaggerItem>
 
-            <p className="max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">
+            <StaggerItem
+              as="p"
+              fade={false}
+              className="max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg"
+            >
               Diseño y construyo sistemas distribuidos completos: desde
               interfaces web accesibles y aplicaciones móviles offline-first
               hasta APIs transaccionales, pipelines de visión artificial y
               despliegues endurecidos en contenedores.
-            </p>
+            </StaggerItem>
 
             {/* Botonera principal + disparador Ctrl+K */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
+            <StaggerItem className="flex flex-wrap items-center gap-3 pt-2">
               <Link
                 href="#porcitech"
                 className="inline-flex h-11 items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 px-5 text-sm font-semibold text-slate-950 shadow-[0_0_25px_-5px_rgba(56,189,248,0.55)] transition-all hover:brightness-110 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
@@ -92,20 +105,10 @@ export function HeroSection() {
                 <span>Contacto</span>
               </Link>
 
-              <button
-                type="button"
-                onClick={triggerCommandPalette}
-                className="inline-flex h-11 items-center gap-2 rounded-xl border border-slate-800/80 bg-slate-900/35 px-3.5 font-mono text-xs text-slate-400 transition-colors hover:border-cyan-500/40 hover:text-cyan-300 focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:outline-none"
-              >
-                <CommandIcon className="size-3.5 text-cyan-400" />
-                <span>Paleta rápida</span>
-                <kbd className="rounded border border-slate-800 bg-slate-950 px-1.5 py-0.5 text-[10px] text-slate-300">
-                  ⌘K
-                </kbd>
-              </button>
-            </div>
+              <CommandPaletteTrigger />
+            </StaggerItem>
 
-            <div className="grid grid-cols-1 gap-3 border-t border-slate-800/80 pt-6 text-xs text-slate-300 sm:grid-cols-3">
+            <StaggerItem className="grid grid-cols-1 gap-3 border-t border-slate-800/80 pt-6 text-xs text-slate-300 sm:grid-cols-3">
               <div className="flex items-center gap-2 font-mono">
                 <TerminalIcon className="size-4 shrink-0 text-emerald-400" />
                 <span>Arquitectura Hexagonal &amp; Clean Code</span>
@@ -118,8 +121,8 @@ export function HeroSection() {
                 <Code2Icon className="size-4 shrink-0 text-indigo-400" />
                 <span>Next.js • FastAPI • YOLOv8 • Flutter</span>
               </div>
-            </div>
-          </motion.div>
+            </StaggerItem>
+          </StaggerContainer>
 
           {/* Columna derecha (5 cols) */}
           <div className="lg:col-span-5">

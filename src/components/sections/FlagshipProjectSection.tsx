@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "framer-motion";
 import {
   ArrowUpRightIcon,
   BookOpenIcon,
@@ -15,6 +12,13 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { flagshipProject } from "@/data/projects";
+import { Reveal } from "@/components/motion/Reveal";
+import { HoverCard } from "@/components/motion/HoverCard";
+import { TechBadge } from "@/components/motion/TechBadge";
+import {
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/motion/StaggerContainer";
 
 function getModuleIcon(label: string) {
   const lower = label.toLowerCase();
@@ -40,13 +44,7 @@ export function FlagshipProjectSection() {
       className="scroll-mt-20 border-b border-slate-800/70 py-20"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ y: 12 }}
-          whileInView={{ y: 0 }}
-          viewport={{ once: true, amount: 0.05 }}
-          transition={{ duration: 0.45, ease: "easeOut" }}
-          className="mb-8 flex flex-col gap-2"
-        >
+        <Reveal className="mb-8 flex flex-col gap-2">
           <span className="font-mono text-xs font-semibold tracking-wider text-cyan-400 uppercase">
             01 // Caso de Estudio Insignia (Flagship)
           </span>
@@ -56,13 +54,10 @@ export function FlagshipProjectSection() {
           >
             Ingeniería Distribuida Aplicada al Sector Agroindustrial
           </h2>
-        </motion.div>
+        </Reveal>
 
-        <motion.div
-          initial={{ y: 12 }}
-          whileInView={{ y: 0 }}
-          viewport={{ once: true, amount: 0.05 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+        <Reveal
+          duration={0.55}
           className="glass-card relative overflow-hidden rounded-3xl p-6 sm:p-8 lg:p-10"
         >
           {/* Resplandor ambiental en la esquina superior derecha */}
@@ -121,13 +116,14 @@ export function FlagshipProjectSection() {
 
               <div className="flex flex-wrap gap-1.5 pt-2">
                 {flagshipProject.stack.map((tech) => (
-                  <Badge
-                    key={tech}
-                    variant="outline"
-                    className="border-slate-700/80 bg-slate-950/70 font-mono text-[11px] text-cyan-200"
-                  >
-                    {tech}
-                  </Badge>
+                  <TechBadge key={tech}>
+                    <Badge
+                      variant="outline"
+                      className="border-slate-700/80 bg-slate-950/70 font-mono text-[11px] text-cyan-200"
+                    >
+                      {tech}
+                    </Badge>
+                  </TechBadge>
                 ))}
               </div>
             </div>
@@ -138,57 +134,56 @@ export function FlagshipProjectSection() {
                 <span>Módulos Desacoplados del Ecosistema (4 Repositorios)</span>
               </h4>
 
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <StaggerContainer className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {modules.map((mod) => {
                   const ModIcon = getModuleIcon(mod.label);
                   return (
-                    <div
-                      key={mod.label}
-                      className="glass-card glass-card-hover group flex flex-col justify-between rounded-2xl p-4"
-                    >
-                      <div className="space-y-2.5">
-                        <div className="flex items-center justify-between gap-2">
-                          <div className="flex items-center gap-2">
-                            <span className="inline-flex size-7 items-center justify-center rounded-lg border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 shadow-[0_0_12px_-2px_rgba(34,211,238,0.3)]">
-                              <ModIcon className="size-3.5" />
-                            </span>
-                            <span className="font-mono text-sm font-semibold text-white transition-colors group-hover:text-cyan-300">
-                              {mod.label}
-                            </span>
+                    <StaggerItem key={mod.label}>
+                      <HoverCard className="glass-card glass-card-hover group flex flex-col justify-between rounded-2xl p-4">
+                        <div className="space-y-2.5">
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-2">
+                              <span className="inline-flex size-7 items-center justify-center rounded-lg border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 shadow-[0_0_12px_-2px_rgba(34,211,238,0.3)]">
+                                <ModIcon className="size-3.5" />
+                              </span>
+                              <span className="font-mono text-sm font-semibold text-white transition-colors group-hover:text-cyan-300">
+                                {mod.label}
+                              </span>
+                            </div>
+                            <a
+                              href={mod.repoUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`Abrir repositorio de ${mod.label} en GitHub`}
+                              className="inline-flex items-center gap-1 rounded-md border border-slate-800 bg-slate-950/80 px-2 py-0.5 font-mono text-xs text-cyan-400 transition-colors hover:border-cyan-400/50 hover:text-cyan-300"
+                            >
+                              <span>Repo</span>
+                              <ArrowUpRightIcon className="size-3" />
+                            </a>
                           </div>
-                          <a
-                            href={mod.repoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`Abrir repositorio de ${mod.label} en GitHub`}
-                            className="inline-flex items-center gap-1 rounded-md border border-slate-800 bg-slate-950/80 px-2 py-0.5 font-mono text-xs text-cyan-400 transition-colors hover:border-cyan-400/50 hover:text-cyan-300"
-                          >
-                            <span>Repo</span>
-                            <ArrowUpRightIcon className="size-3" />
-                          </a>
+                          <p className="text-xs leading-relaxed text-slate-300">
+                            {mod.description}
+                          </p>
                         </div>
-                        <p className="text-xs leading-relaxed text-slate-300">
-                          {mod.description}
-                        </p>
-                      </div>
 
-                      <div className="mt-4 flex flex-wrap gap-1 border-t border-slate-800/70 pt-3">
-                        {mod.tech.map((t) => (
-                          <span
-                            key={t}
-                            className="rounded border border-slate-800 bg-slate-950/90 px-1.5 py-0.5 font-mono text-[10px] text-slate-300"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+                        <div className="mt-4 flex flex-wrap gap-1 border-t border-slate-800/70 pt-3">
+                          {mod.tech.map((t) => (
+                            <span
+                              key={t}
+                              className="rounded border border-slate-800 bg-slate-950/90 px-1.5 py-0.5 font-mono text-[10px] text-slate-300"
+                            >
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                      </HoverCard>
+                    </StaggerItem>
                   );
                 })}
-              </div>
+              </StaggerContainer>
             </div>
           </div>
-        </motion.div>
+        </Reveal>
       </div>
     </section>
   );

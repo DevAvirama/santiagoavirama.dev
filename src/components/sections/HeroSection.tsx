@@ -9,11 +9,13 @@ import {
 } from "lucide-react";
 import { CodeShowcaseCard } from "@/components/sections/CodeShowcaseCard";
 import { CommandPaletteTrigger } from "@/components/layout/CommandPaletteTrigger";
-import { StatusPulse } from "@/components/motion/StatusPulse";
 import {
-  StaggerContainer,
-  StaggerItem,
-} from "@/components/motion/StaggerContainer";
+  HeroBackground,
+  HeroPointerContainer,
+} from "@/components/motion/HeroBackground";
+import { StaggerGroup } from "@/components/motion/StaggerGroup";
+import { StaggerItem } from "@/components/motion/StaggerItem";
+import { StatusPulse } from "@/components/motion/StatusPulse";
 
 /**
  * Server Component: todo el texto se emite en el HTML del SSR.
@@ -21,20 +23,21 @@ import {
  */
 export function HeroSection() {
   return (
-    <section
+    <HeroPointerContainer
       aria-labelledby="hero-heading"
       className="relative overflow-hidden border-b border-slate-800/70 py-16 sm:py-24 lg:py-28"
     >
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <HeroBackground />
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
           {/*
             Columna izquierda (7 cols): entrada escalonada al montar.
             Los bloques de texto grandes (candidatos a LCP) solo animan
             transform (fade={false}) para quedar 100% visibles desde el SSR.
           */}
-          <StaggerContainer
+          <StaggerGroup
             trigger="mount"
-            stagger={0.07}
+            stagger={0.06}
             delayChildren={0.05}
             className="space-y-6 lg:col-span-7"
           >
@@ -122,7 +125,7 @@ export function HeroSection() {
                 <span>Next.js • FastAPI • YOLOv8 • Flutter</span>
               </div>
             </StaggerItem>
-          </StaggerContainer>
+          </StaggerGroup>
 
           {/* Columna derecha (5 cols) */}
           <div className="lg:col-span-5">
@@ -130,6 +133,6 @@ export function HeroSection() {
           </div>
         </div>
       </div>
-    </section>
+    </HeroPointerContainer>
   );
 }

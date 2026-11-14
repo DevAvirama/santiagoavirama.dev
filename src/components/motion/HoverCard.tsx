@@ -9,7 +9,7 @@ import {
 
 const cardVariants: Variants = {
   rest: { y: 0, transition: hoverTransition },
-  hover: { y: -4, transition: hoverTransition },
+  hover: { y: -2, transition: hoverTransition },
 };
 
 const glowVariants: Variants = {
@@ -30,7 +30,7 @@ const GLOW_STYLES: Record<NonNullable<HoverCardProps["glow"]>, string> = {
   indigo:
     "inset-ring-indigo-400/35 shadow-[inset_0_0_28px_-10px_rgba(129,140,248,0.45)]",
   emerald:
-    "inset-ring-emerald-400/35 shadow-[inset_0_0_28px_-10px_rgba(52,211,153,0.45)]",
+    "inset-ring-emerald-500/40 shadow-[inset_0_0_28px_-10px_rgba(16,185,129,0.4)]",
 };
 
 /**

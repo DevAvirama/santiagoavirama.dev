@@ -9,11 +9,9 @@ import {
 import { stackLayers } from "@/data/stack";
 import { Reveal } from "@/components/motion/Reveal";
 import { HoverCard } from "@/components/motion/HoverCard";
+import { StaggerGroup } from "@/components/motion/StaggerGroup";
+import { StaggerItem } from "@/components/motion/StaggerItem";
 import { TechBadge } from "@/components/motion/TechBadge";
-import {
-  StaggerContainer,
-  StaggerItem,
-} from "@/components/motion/StaggerContainer";
 
 function getLayerVisuals(id: string) {
   if (id.includes("frontend") || id.includes("client")) {
@@ -89,10 +87,7 @@ export function TechStackSection() {
         </Reveal>
 
         {/* Cascada LAYER_01 → LAYER_05 */}
-        <StaggerContainer
-          stagger={0.09}
-          className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-6"
-        >
+        <StaggerGroup className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-6">
           {stackLayers.map((layer, index) => {
             const visuals = getLayerVisuals(layer.id);
             const LayerIcon = visuals.icon;
@@ -140,7 +135,7 @@ export function TechStackSection() {
               </StaggerItem>
             );
           })}
-        </StaggerContainer>
+        </StaggerGroup>
       </div>
     </section>
   );

@@ -96,7 +96,7 @@ export const complementaryLearning: ComplementaryCourse[] = [
     name: "Developing Interpersonal Skills",
     issuer: "IBM / Coursera",
     date: "Julio 2024",
-    credentialUrl: "https://coursera.org/verify/XYFMCK9EU516",
+    credentialUrl: "https://coursera.org/verify/XYFMCK9EU5J6",
   },
   {
     name: "Diplomado en Gestión Integral del Servicio al Cliente",

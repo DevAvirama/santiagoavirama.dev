@@ -15,7 +15,7 @@ export function TechBadge({ children, className }: TechBadgeProps) {
   return (
     <motion.span
       className={`inline-block ${className ?? ""}`}
-      whileHover={{ y: -2, scale: 1.04 }}
+      whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.98 }}
       transition={hoverTransition}
     >

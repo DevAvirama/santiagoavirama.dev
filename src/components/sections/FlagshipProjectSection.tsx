@@ -14,11 +14,9 @@ import { Badge } from "@/components/ui/badge";
 import { flagshipProject } from "@/data/projects";
 import { Reveal } from "@/components/motion/Reveal";
 import { HoverCard } from "@/components/motion/HoverCard";
+import { StaggerGroup } from "@/components/motion/StaggerGroup";
+import { StaggerItem } from "@/components/motion/StaggerItem";
 import { TechBadge } from "@/components/motion/TechBadge";
-import {
-  StaggerContainer,
-  StaggerItem,
-} from "@/components/motion/StaggerContainer";
 
 function getModuleIcon(label: string) {
   const lower = label.toLowerCase();
@@ -58,7 +56,7 @@ export function FlagshipProjectSection() {
 
         <Reveal
           duration={0.55}
-          className="glass-card relative overflow-hidden rounded-3xl p-6 sm:p-8 lg:p-10"
+          className="glass-card relative overflow-hidden rounded-3xl p-6 transition-[border-color,background-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-emerald-500/40 sm:p-8 lg:p-10"
         >
           {/* Resplandor ambiental en la esquina superior derecha */}
           <div
@@ -134,12 +132,15 @@ export function FlagshipProjectSection() {
                 <span>Módulos Desacoplados del Ecosistema (4 Repositorios)</span>
               </h4>
 
-              <StaggerContainer className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <StaggerGroup className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {modules.map((mod) => {
                   const ModIcon = getModuleIcon(mod.label);
                   return (
                     <StaggerItem key={mod.label}>
-                      <HoverCard className="glass-card glass-card-hover group flex flex-col justify-between rounded-2xl p-4">
+                      <HoverCard
+                        glow="emerald"
+                        className="glass-card group flex flex-col justify-between rounded-2xl p-4 hover:border-emerald-500/40 hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.18),inset_0_1px_0_0_rgba(255,255,255,0.12)]"
+                      >
                         <div className="space-y-2.5">
                           <div className="flex items-center justify-between gap-2">
                             <div className="flex items-center gap-2">
@@ -180,7 +181,7 @@ export function FlagshipProjectSection() {
                     </StaggerItem>
                   );
                 })}
-              </StaggerContainer>
+              </StaggerGroup>
             </div>
           </div>
         </Reveal>

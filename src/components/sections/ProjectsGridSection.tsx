@@ -56,8 +56,8 @@ export function ProjectsGridSection() {
               <Reveal key={project.id} delay={(index % 2) * 0.08}>
                 <HoverCard
                   as="article"
-                  glow={project.tier === "client" ? "indigo" : "cyan"}
-                  className="glass-card glass-card-hover flex flex-col justify-between rounded-2xl p-6"
+                  glow="emerald"
+                  className="glass-card flex flex-col justify-between rounded-2xl p-6 hover:border-emerald-500/40 hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.18),inset_0_1px_0_0_rgba(255,255,255,0.12)]"
                 >
                   <div className="space-y-4">
                     <div className="flex flex-wrap items-center justify-between gap-2">

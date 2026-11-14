@@ -18,11 +18,9 @@ import {
 } from "@/data/credentials";
 import { Reveal } from "@/components/motion/Reveal";
 import { HoverCard } from "@/components/motion/HoverCard";
+import { StaggerGroup } from "@/components/motion/StaggerGroup";
+import { StaggerItem } from "@/components/motion/StaggerItem";
 import { TechBadge } from "@/components/motion/TechBadge";
-import {
-  StaggerContainer,
-  StaggerItem,
-} from "@/components/motion/StaggerContainer";
 
 const workingPillars = [
   {
@@ -84,12 +82,15 @@ export function AboutAndCredentialsSection() {
           </p>
         </Reveal>
 
-        <StaggerContainer className="mb-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <StaggerGroup className="mb-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {workingPillars.map((pillar) => {
             const Icon = pillar.icon;
             return (
               <StaggerItem key={pillar.title}>
-                <HoverCard className="glass-card glass-card-hover relative overflow-hidden rounded-2xl p-5 pl-6">
+                <HoverCard
+                  glow="emerald"
+                  className="glass-card relative overflow-hidden rounded-2xl p-5 pl-6 hover:border-emerald-500/40 hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.18),inset_0_1px_0_0_rgba(255,255,255,0.12)]"
+                >
                   {/* Barra de acento lateral luminosa */}
                   <span
                     aria-hidden="true"
@@ -110,7 +111,7 @@ export function AboutAndCredentialsSection() {
               </StaggerItem>
             );
           })}
-        </StaggerContainer>
+        </StaggerGroup>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
           <div className="space-y-8 lg:col-span-5">
@@ -123,7 +124,10 @@ export function AboutAndCredentialsSection() {
               <div className="space-y-4">
                 {educationList.map((edu) => (
                   <Reveal key={edu.id}>
-                    <HoverCard className="glass-card glass-card-hover relative overflow-hidden rounded-2xl p-5 pl-6">
+                    <HoverCard
+                      glow="emerald"
+                      className="glass-card relative overflow-hidden rounded-2xl p-5 pl-6 hover:border-emerald-500/40 hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.18),inset_0_1px_0_0_rgba(255,255,255,0.12)]"
+                    >
                       <span
                         aria-hidden="true"
                         className="absolute top-4 bottom-4 left-0 w-1 rounded-r-full bg-gradient-to-b from-cyan-400 to-indigo-500"
@@ -200,8 +204,8 @@ export function AboutAndCredentialsSection() {
               {certificationsList.map((cert) => (
                 <Reveal key={cert.id}>
                   <HoverCard
-                    glow={cert.status === "verified" ? "emerald" : "indigo"}
-                    className="glass-card glass-card-hover relative overflow-hidden rounded-2xl p-6 pl-7"
+                    glow="emerald"
+                    className="glass-card relative overflow-hidden rounded-2xl p-6 pl-7 hover:border-emerald-500/40 hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.18),inset_0_1px_0_0_rgba(255,255,255,0.12)]"
                   >
                     <span
                       aria-hidden="true"

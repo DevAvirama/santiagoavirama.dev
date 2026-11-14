@@ -8,12 +8,10 @@ import {
 } from "lucide-react";
 import type { LabRepository } from "@/types/github";
 import { Reveal } from "@/components/motion/Reveal";
+import { StaggerGroup } from "@/components/motion/StaggerGroup";
+import { StaggerItem } from "@/components/motion/StaggerItem";
 import { StatusPulse } from "@/components/motion/StatusPulse";
 import { TerminalCursor } from "@/components/motion/TerminalCursor";
-import {
-  StaggerContainer,
-  StaggerItem,
-} from "@/components/motion/StaggerContainer";
 
 interface LabSectionProps {
   repositories: LabRepository[];
@@ -96,10 +94,7 @@ export function LabSection({ repositories }: LabSectionProps) {
           </div>
 
           {repositories.length > 0 ? (
-            <StaggerContainer
-              stagger={0.06}
-              className="divide-y divide-slate-800/70"
-            >
+            <StaggerGroup className="divide-y divide-slate-800/70">
               {repositories.map((repo) => (
                 <StaggerItem
                   key={repo.id}
@@ -175,7 +170,7 @@ export function LabSection({ repositories }: LabSectionProps) {
                   </div>
                 </StaggerItem>
               ))}
-            </StaggerContainer>
+            </StaggerGroup>
           ) : (
             <div className="flex flex-col items-center justify-center gap-3 p-10 text-center">
               <TerminalIcon className="size-6 text-cyan-400" />

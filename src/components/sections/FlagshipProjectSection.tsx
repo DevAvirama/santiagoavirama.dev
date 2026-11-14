@@ -13,7 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { flagshipProject } from "@/data/projects";
 import { Reveal } from "@/components/motion/Reveal";
-import { HoverCard } from "@/components/motion/HoverCard";
+import { SpotlightCard } from "@/components/motion/SpotlightCard";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
 import { StaggerItem } from "@/components/motion/StaggerItem";
 import { TechBadge } from "@/components/motion/TechBadge";
@@ -39,7 +39,7 @@ export function FlagshipProjectSection() {
     <section
       id="porcitech"
       aria-labelledby="porcitech-heading"
-      className="scroll-mt-20 border-b border-slate-800/70 py-20"
+      className="scroll-mt-20 py-20"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal className="mb-8 flex flex-col gap-2">
@@ -54,10 +54,8 @@ export function FlagshipProjectSection() {
           </h2>
         </Reveal>
 
-        <Reveal
-          duration={0.55}
-          className="glass-card relative overflow-hidden rounded-3xl p-6 transition-[border-color,background-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-emerald-500/40 sm:p-8 lg:p-10"
-        >
+        <Reveal duration={0.55}>
+          <SpotlightCard className="rounded-3xl p-6 sm:p-8 lg:p-10">
           {/* Resplandor ambiental en la esquina superior derecha */}
           <div
             aria-hidden="true"
@@ -137,10 +135,7 @@ export function FlagshipProjectSection() {
                   const ModIcon = getModuleIcon(mod.label);
                   return (
                     <StaggerItem key={mod.label}>
-                      <HoverCard
-                        glow="emerald"
-                        className="glass-card group flex flex-col justify-between rounded-2xl p-4 hover:border-emerald-500/40 hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.18),inset_0_1px_0_0_rgba(255,255,255,0.12)]"
-                      >
+                      <SpotlightCard className="group flex h-full flex-col justify-between rounded-2xl p-4">
                         <div className="space-y-2.5">
                           <div className="flex items-center justify-between gap-2">
                             <div className="flex items-center gap-2">
@@ -177,13 +172,14 @@ export function FlagshipProjectSection() {
                             </span>
                           ))}
                         </div>
-                      </HoverCard>
+                      </SpotlightCard>
                     </StaggerItem>
                   );
                 })}
               </StaggerGroup>
             </div>
           </div>
+          </SpotlightCard>
         </Reveal>
       </div>
     </section>

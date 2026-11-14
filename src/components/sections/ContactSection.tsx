@@ -5,6 +5,7 @@ import {
   TerminalIcon,
 } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
+import { SpotlightCard } from "@/components/motion/SpotlightCard";
 import { CopyEmailButton } from "@/components/sections/CopyEmailButton";
 
 const CONTACT_EMAIL = "santyaviramagnf@gmail.com";
@@ -17,10 +18,8 @@ export function ContactSection() {
       className="scroll-mt-20 py-20"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <Reveal
-          duration={0.55}
-          className="glass-card relative overflow-hidden rounded-3xl p-8 sm:p-10 lg:p-12"
-        >
+        <Reveal duration={0.55}>
+          <SpotlightCard className="rounded-3xl p-8 sm:p-10 lg:p-12">
           {/* Malla de gradiente suave cian/índigo de fondo */}
           <div
             aria-hidden="true"
@@ -96,6 +95,7 @@ export function ContactSection() {
               </div>
             </div>
           </div>
+          </SpotlightCard>
         </Reveal>
       </div>
     </section>

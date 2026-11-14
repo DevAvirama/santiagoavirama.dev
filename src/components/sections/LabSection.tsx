@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import type { LabRepository } from "@/types/github";
 import { Reveal } from "@/components/motion/Reveal";
+import { SpotlightCard } from "@/components/motion/SpotlightCard";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
 import { StaggerItem } from "@/components/motion/StaggerItem";
 import { StatusPulse } from "@/components/motion/StatusPulse";
@@ -34,7 +35,7 @@ export function LabSection({ repositories }: LabSectionProps) {
     <section
       id="lab"
       aria-labelledby="lab-heading"
-      className="scroll-mt-20 border-b border-slate-800/70 py-20"
+      className="scroll-mt-20 py-20"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal
@@ -73,7 +74,7 @@ export function LabSection({ repositories }: LabSectionProps) {
 
         <Reveal
           duration={0.55}
-          className="glass-card glass-card-hover overflow-hidden rounded-2xl"
+          className="overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/70 backdrop-blur-sm shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]"
         >
           <div className="flex items-center justify-between border-b border-slate-800/80 bg-slate-950/90 px-4 py-3 font-mono text-xs text-slate-400">
             <div className="flex items-center gap-2">
@@ -94,13 +95,10 @@ export function LabSection({ repositories }: LabSectionProps) {
           </div>
 
           {repositories.length > 0 ? (
-            <StaggerGroup className="divide-y divide-slate-800/70">
+            <StaggerGroup className="space-y-3 p-4 sm:p-5">
               {repositories.map((repo) => (
-                <StaggerItem
-                  key={repo.id}
-                  y={8}
-                  className="flex flex-col justify-between gap-4 p-5 transition-colors hover:bg-slate-900/60 sm:flex-row sm:items-center sm:px-6"
-                >
+                <StaggerItem key={repo.id} y={8}>
+                  <SpotlightCard className="flex flex-col justify-between gap-4 rounded-xl p-4 sm:flex-row sm:items-center sm:px-5">
                   <div className="space-y-2">
                     <div className="flex flex-wrap items-center gap-2.5">
                       <span className="inline-flex size-7 items-center justify-center rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-emerald-400">
@@ -167,7 +165,8 @@ export function LabSection({ repositories }: LabSectionProps) {
                       <span>Código</span>
                       <ArrowUpRightIcon className="size-3.5" />
                     </a>
-                  </div>
+                    </div>
+                  </SpotlightCard>
                 </StaggerItem>
               ))}
             </StaggerGroup>

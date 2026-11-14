@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { stackLayers } from "@/data/stack";
 import { Reveal } from "@/components/motion/Reveal";
-import { HoverCard } from "@/components/motion/HoverCard";
+import { SpotlightCard } from "@/components/motion/SpotlightCard";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
 import { StaggerItem } from "@/components/motion/StaggerItem";
 import { TechBadge } from "@/components/motion/TechBadge";
@@ -67,7 +67,7 @@ export function TechStackSection() {
     <section
       id="stack"
       aria-labelledby="stack-heading"
-      className="scroll-mt-20 border-b border-slate-800/70 py-20"
+      className="scroll-mt-20 py-20"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal className="mb-10 space-y-2">
@@ -96,10 +96,7 @@ export function TechStackSection() {
 
             return (
               <StaggerItem key={layer.id} className={bentoSpan}>
-                <HoverCard
-                  glow={visuals.glow}
-                  className="glass-card glass-card-hover flex flex-col justify-between rounded-2xl p-6"
-                >
+                <SpotlightCard className="flex h-full flex-col justify-between rounded-2xl p-6">
                   <div className="space-y-3.5">
                     <div className="flex items-center justify-between">
                       <span
@@ -131,7 +128,7 @@ export function TechStackSection() {
                       </TechBadge>
                     ))}
                   </div>
-                </HoverCard>
+                </SpotlightCard>
               </StaggerItem>
             );
           })}

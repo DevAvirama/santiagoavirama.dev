@@ -17,7 +17,7 @@ import {
   educationList,
 } from "@/data/credentials";
 import { Reveal } from "@/components/motion/Reveal";
-import { HoverCard } from "@/components/motion/HoverCard";
+import { SpotlightCard } from "@/components/motion/SpotlightCard";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
 import { StaggerItem } from "@/components/motion/StaggerItem";
 import { TechBadge } from "@/components/motion/TechBadge";
@@ -62,7 +62,7 @@ export function AboutAndCredentialsSection() {
     <section
       id="perfil"
       aria-labelledby="perfil-heading"
-      className="scroll-mt-20 border-b border-slate-800/70 py-20"
+      className="scroll-mt-20 py-20"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal className="mb-10 space-y-2">
@@ -87,10 +87,7 @@ export function AboutAndCredentialsSection() {
             const Icon = pillar.icon;
             return (
               <StaggerItem key={pillar.title}>
-                <HoverCard
-                  glow="emerald"
-                  className="glass-card relative overflow-hidden rounded-2xl p-5 pl-6 hover:border-emerald-500/40 hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.18),inset_0_1px_0_0_rgba(255,255,255,0.12)]"
-                >
+                <SpotlightCard className="h-full p-5 pl-6">
                   {/* Barra de acento lateral luminosa */}
                   <span
                     aria-hidden="true"
@@ -107,7 +104,7 @@ export function AboutAndCredentialsSection() {
                   <p className="text-xs leading-relaxed text-slate-300">
                     {pillar.description}
                   </p>
-                </HoverCard>
+                </SpotlightCard>
               </StaggerItem>
             );
           })}
@@ -124,10 +121,7 @@ export function AboutAndCredentialsSection() {
               <div className="space-y-4">
                 {educationList.map((edu) => (
                   <Reveal key={edu.id}>
-                    <HoverCard
-                      glow="emerald"
-                      className="glass-card relative overflow-hidden rounded-2xl p-5 pl-6 hover:border-emerald-500/40 hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.18),inset_0_1px_0_0_rgba(255,255,255,0.12)]"
-                    >
+                    <SpotlightCard className="p-5 pl-6">
                       <span
                         aria-hidden="true"
                         className="absolute top-4 bottom-4 left-0 w-1 rounded-r-full bg-gradient-to-b from-cyan-400 to-indigo-500"
@@ -151,7 +145,7 @@ export function AboutAndCredentialsSection() {
                           </li>
                         ))}
                       </ul>
-                    </HoverCard>
+                    </SpotlightCard>
                   </Reveal>
                 ))}
               </div>
@@ -163,33 +157,35 @@ export function AboutAndCredentialsSection() {
                 <span>Formación Complementaria & Habilidades Blandas</span>
               </h3>
 
-              <Reveal className="glass-card divide-y divide-slate-800/70 rounded-2xl">
-                {complementaryLearning.map((course) => (
-                  <div
-                    key={`${course.name}-${course.issuer}`}
-                    className="flex items-center justify-between gap-4 p-4 transition-colors hover:bg-slate-900/40"
-                  >
-                    <div>
-                      <p className="text-xs font-semibold text-white">
-                        {course.name}
-                      </p>
-                      <p className="font-mono text-[11px] text-slate-400">
-                        {course.issuer} • {course.date}
-                      </p>
+              <Reveal>
+                <SpotlightCard className="divide-y divide-slate-800/70">
+                  {complementaryLearning.map((course) => (
+                    <div
+                      key={`${course.name}-${course.issuer}`}
+                      className="relative flex items-center justify-between gap-4 p-4 transition-colors hover:bg-slate-900/40"
+                    >
+                      <div>
+                        <p className="text-xs font-semibold text-white">
+                          {course.name}
+                        </p>
+                        <p className="font-mono text-[11px] text-slate-400">
+                          {course.issuer} • {course.date}
+                        </p>
+                      </div>
+                      {course.credentialUrl && (
+                        <a
+                          href={course.credentialUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex shrink-0 items-center gap-1 font-mono text-xs text-cyan-400 hover:text-cyan-300 hover:underline"
+                        >
+                          <span>Verificar</span>
+                          <ExternalLinkIcon className="size-3" />
+                        </a>
+                      )}
                     </div>
-                    {course.credentialUrl && (
-                      <a
-                        href={course.credentialUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex shrink-0 items-center gap-1 font-mono text-xs text-cyan-400 hover:text-cyan-300 hover:underline"
-                      >
-                        <span>Verificar</span>
-                        <ExternalLinkIcon className="size-3" />
-                      </a>
-                    )}
-                  </div>
-                ))}
+                  ))}
+                </SpotlightCard>
               </Reveal>
             </div>
           </div>
@@ -203,10 +199,7 @@ export function AboutAndCredentialsSection() {
             <div className="space-y-4">
               {certificationsList.map((cert) => (
                 <Reveal key={cert.id}>
-                  <HoverCard
-                    glow="emerald"
-                    className="glass-card relative overflow-hidden rounded-2xl p-6 pl-7 hover:border-emerald-500/40 hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.18),inset_0_1px_0_0_rgba(255,255,255,0.12)]"
-                  >
+                  <SpotlightCard className="p-6 pl-7">
                     <span
                       aria-hidden="true"
                       className={`absolute top-5 bottom-5 left-0 w-1 rounded-r-full ${
@@ -269,7 +262,7 @@ export function AboutAndCredentialsSection() {
                         </TechBadge>
                       ))}
                     </div>
-                  </HoverCard>
+                  </SpotlightCard>
                 </Reveal>
               ))}
             </div>

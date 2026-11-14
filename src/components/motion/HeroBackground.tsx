@@ -1,75 +1,6 @@
 "use client";
 
-import * as React from "react";
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useReducedMotion,
-  type MotionValue,
-} from "framer-motion";
-
-interface HeroPointerContextValue {
-  pointerX: MotionValue<number>;
-  pointerY: MotionValue<number>;
-  spotlightOpacity: MotionValue<number>;
-}
-
-const HeroPointerContext = React.createContext<HeroPointerContextValue | null>(
-  null,
-);
-
-interface HeroPointerContainerProps {
-  children: React.ReactNode;
-  className?: string;
-  "aria-labelledby"?: string;
-}
-
-/**
- * Contenedor del Hero (`<section>`) que captura `onPointerMove` directamente
- * sobre `MotionValue`s para actualizar el spotlight sin re-renders en React.
- * Recibe `children` desde el Server Component `HeroSection` preservando el SSR.
- */
-export function HeroPointerContainer({
-  children,
-  className,
-  "aria-labelledby": ariaLabelledBy,
-}: HeroPointerContainerProps) {
-  const shouldReduceMotion = useReducedMotion();
-  const pointerX = useMotionValue(-999);
-  const pointerY = useMotionValue(-999);
-  const spotlightOpacity = useMotionValue(0);
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
-    if (shouldReduceMotion || event.pointerType === "touch") return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    pointerX.set(event.clientX - rect.left);
-    pointerY.set(event.clientY - rect.top);
-    spotlightOpacity.set(1);
-  };
-
-  const handlePointerLeave = () => {
-    spotlightOpacity.set(0);
-  };
-
-  const contextValue = React.useMemo(
-    () => ({ pointerX, pointerY, spotlightOpacity }),
-    [pointerX, pointerY, spotlightOpacity],
-  );
-
-  return (
-    <HeroPointerContext.Provider value={contextValue}>
-      <section
-        aria-labelledby={ariaLabelledBy}
-        onPointerMove={handlePointerMove}
-        onPointerLeave={handlePointerLeave}
-        className={className}
-      >
-        {children}
-      </section>
-    </HeroPointerContext.Provider>
-  );
-}
+import { motion, useReducedMotion } from "framer-motion";
 
 interface TraceRoute {
   id: string;
@@ -115,39 +46,70 @@ const TRACE_ROUTES: TraceRoute[] = [
   },
 ];
 
+interface AmbientOrb {
+  id: string;
+  className: string;
+  keyframes: string[];
+  duration: number;
+}
+
+const HERO_ORBS: AmbientOrb[] = [
+  {
+    id: "hero-orb-emerald",
+    className:
+      "absolute -top-28 left-[18%] h-[24rem] w-[24rem] rounded-full bg-emerald-500/[0.04] blur-3xl",
+    keyframes: [
+      "translate3d(0px, 0px, 0px)",
+      "translate3d(36px, 22px, 0px)",
+      "translate3d(-20px, 32px, 0px)",
+    ],
+    duration: 20,
+  },
+  {
+    id: "hero-orb-cyan",
+    className:
+      "absolute -top-16 right-[14%] h-[26rem] w-[26rem] rounded-full bg-cyan-500/[0.04] blur-3xl",
+    keyframes: [
+      "translate3d(0px, 0px, 0px)",
+      "translate3d(-38px, 26px, 0px)",
+      "translate3d(22px, -24px, 0px)",
+    ],
+    duration: 24,
+  },
+];
+
 /**
- * Capa arquitectónica exclusiva del Hero (sobre `GlobalBackdrop`):
- * - Spotlight interactivo de 450px controlado con `useMotionValue` +
- *   `useMotionTemplate` (sin re-renders ni duplicación del grid/orbes globales)
- * - Trazas SVG ortogonales laterales con pulso de flujo de datos
+ * Acentos visuales exclusivos del Hero (sin tapar ni duplicar la cuadrícula
+ * ni el spotlight global de `GlobalBackdrop`):
+ * - Orbes superiores lentos (`translate3d`)
+ * - Trazas SVG ortogonales laterales con pulsos de paquetes de datos
  */
 export function HeroBackground() {
   const shouldReduceMotion = useReducedMotion();
-  const context = React.useContext(HeroPointerContext);
-
-  const fallbackX = useMotionValue(-999);
-  const fallbackY = useMotionValue(-999);
-  const fallbackOpacity = useMotionValue(0);
-
-  const pointerX = context?.pointerX ?? fallbackX;
-  const pointerY = context?.pointerY ?? fallbackY;
-  const spotlightOpacity = context?.spotlightOpacity ?? fallbackOpacity;
-
-  const spotlightBackground = useMotionTemplate`radial-gradient(450px circle at ${pointerX}px ${pointerY}px, rgba(16, 185, 129, 0.08), transparent 80%)`;
 
   return (
     <div
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 overflow-hidden select-none"
     >
-      {/* Spotlight interactivo exclusivo del Hero; oculto en dispositivos táctiles */}
-      <motion.div
-        className="absolute inset-0 transition-opacity duration-300 [@media(pointer:coarse)]:hidden"
-        style={{
-          background: spotlightBackground,
-          opacity: spotlightOpacity,
-        }}
-      />
+      {/* Orbes ambientales superiores exclusivos del Hero */}
+      {HERO_ORBS.map((orb) => (
+        <motion.div
+          key={orb.id}
+          className={orb.className}
+          animate={
+            shouldReduceMotion
+              ? { transform: "translate3d(0px, 0px, 0px)" }
+              : { transform: orb.keyframes }
+          }
+          transition={{
+            duration: orb.duration,
+            repeat: shouldReduceMotion ? 0 : Number.POSITIVE_INFINITY,
+            repeatType: "reverse",
+            ease: "easeInOut",
+          }}
+        />
+      ))}
 
       {/* Trazas SVG ortogonales en los bordes laterales */}
       <svg

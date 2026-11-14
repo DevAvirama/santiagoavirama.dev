@@ -9,10 +9,7 @@ import {
 } from "lucide-react";
 import { CodeShowcaseCard } from "@/components/sections/CodeShowcaseCard";
 import { CommandPaletteTrigger } from "@/components/layout/CommandPaletteTrigger";
-import {
-  HeroBackground,
-  HeroPointerContainer,
-} from "@/components/motion/HeroBackground";
+import { HeroBackground } from "@/components/motion/HeroBackground";
 import { StaggerGroup } from "@/components/motion/StaggerGroup";
 import { StaggerItem } from "@/components/motion/StaggerItem";
 import { StatusPulse } from "@/components/motion/StatusPulse";
@@ -23,9 +20,9 @@ import { StatusPulse } from "@/components/motion/StatusPulse";
  */
 export function HeroSection() {
   return (
-    <HeroPointerContainer
+    <section
       aria-labelledby="hero-heading"
-      className="relative overflow-hidden border-b border-slate-800/70 py-16 sm:py-24 lg:py-28"
+      className="relative overflow-hidden py-16 sm:py-24 lg:py-28"
     >
       <HeroBackground />
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -133,6 +130,6 @@ export function HeroSection() {
           </div>
         </div>
       </div>
-    </HeroPointerContainer>
+    </section>
   );
 }

@@ -13,7 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { featuredProjects } from "@/data/projects";
 import { Reveal } from "@/components/motion/Reveal";
-import { HoverCard } from "@/components/motion/HoverCard";
+import { SpotlightCard } from "@/components/motion/SpotlightCard";
 import { TechBadge } from "@/components/motion/TechBadge";
 
 function getProjectCategoryIcon(id: string) {
@@ -28,7 +28,7 @@ export function ProjectsGridSection() {
     <section
       id="proyectos"
       aria-labelledby="proyectos-heading"
-      className="scroll-mt-20 border-b border-slate-800/70 py-20"
+      className="scroll-mt-20 py-20"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal className="mb-10 flex flex-col gap-2">
@@ -54,10 +54,9 @@ export function ProjectsGridSection() {
             const CategoryIcon = getProjectCategoryIcon(project.id);
             return (
               <Reveal key={project.id} delay={(index % 2) * 0.08}>
-                <HoverCard
+                <SpotlightCard
                   as="article"
-                  glow="emerald"
-                  className="glass-card flex flex-col justify-between rounded-2xl p-6 hover:border-emerald-500/40 hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.18),inset_0_1px_0_0_rgba(255,255,255,0.12)]"
+                  className="flex h-full flex-col justify-between rounded-2xl p-6"
                 >
                   <div className="space-y-4">
                     <div className="flex flex-wrap items-center justify-between gap-2">
@@ -160,7 +159,7 @@ export function ProjectsGridSection() {
                       )}
                     </div>
                   </div>
-                </HoverCard>
+                </SpotlightCard>
               </Reveal>
             );
           })}

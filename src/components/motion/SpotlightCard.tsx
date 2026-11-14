@@ -7,7 +7,7 @@ import {
   useMotionValue,
   useReducedMotion,
 } from "framer-motion";
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 
 interface SpotlightCardProps {
   children: React.ReactNode;
@@ -19,11 +19,10 @@ interface SpotlightCardProps {
 
 /**
  * Tarjeta interactiva con spotlight reactivo al cursor (0 re-renders):
- * - Halo radial de 320px (`rgba(16, 185, 129, 0.12)`) controlado con
+ * - Contenedor `w-full h-full` con la paleta original azul pizarra oscuro
+ *   (`bg-slate-900/55` / `#0d131f`, `border-slate-800/80`)
+ * - Halo radial suave de 260px (`rgba(16, 185, 129, 0.055)`) controlado con
  *   `useMotionValue` + `useMotionTemplate`
- * - Borde `border-white/10 hover:border-emerald-500/40`
- * - Fondo translúcido `bg-zinc-950/70 backdrop-blur-sm` para dejar pasar
- *   sutilmente la textura de puntos de `GlobalBackdrop`
  */
 export function SpotlightCard({
   children,
@@ -36,7 +35,7 @@ export function SpotlightCard({
   const mouseY = useMotionValue(-999);
   const spotlightOpacity = useMotionValue(0);
 
-  const spotlightBackground = useMotionTemplate`radial-gradient(320px circle at ${mouseX}px ${mouseY}px, rgba(16, 185, 129, 0.12), transparent 80%)`;
+  const spotlightBackground = useMotionTemplate`radial-gradient(260px circle at ${mouseX}px ${mouseY}px, rgba(16, 185, 129, 0.055), transparent 80%)`;
 
   const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
     if (shouldReduceMotion || event.pointerType === "touch") return;
@@ -51,7 +50,7 @@ export function SpotlightCard({
   };
 
   const sharedClassName = cn(
-    "relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/70 backdrop-blur-sm shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] transition-[border-color,box-shadow,transform] duration-300 hover:border-emerald-500/40 hover:shadow-[0_0_30px_-8px_rgba(16,185,129,0.22),inset_0_1px_0_0_rgba(255,255,255,0.12)]",
+    "relative h-full w-full overflow-hidden rounded-2xl border border-slate-800/80 bg-slate-900/55 backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] transition-[border-color,background-color,box-shadow,transform] duration-300 hover:border-emerald-500/35 hover:shadow-[0_0_28px_-8px_rgba(16,185,129,0.16),inset_0_1px_0_0_rgba(255,255,255,0.1)]",
     liftOnHover && "hover:-translate-y-0.5",
     className,
   );

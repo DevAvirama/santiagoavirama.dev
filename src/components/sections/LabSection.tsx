@@ -74,7 +74,7 @@ export function LabSection({ repositories }: LabSectionProps) {
 
         <Reveal
           duration={0.55}
-          className="overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/70 backdrop-blur-sm shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]"
+          className="glass-card overflow-hidden rounded-2xl"
         >
           <div className="flex items-center justify-between border-b border-slate-800/80 bg-slate-950/90 px-4 py-3 font-mono text-xs text-slate-400">
             <div className="flex items-center gap-2">

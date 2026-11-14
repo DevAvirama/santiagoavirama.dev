@@ -29,14 +29,14 @@ const RAIL_TICKS = ["12%", "28%", "46%", "62%", "78%", "92%"] as const;
 
 /**
  * Fondo arquitectónico interactivo global (`RootLayout`):
- * 1. Cuadrícula de puntos nítida (`rgba(255,255,255,0.14)` 1px cada 24px).
- * 2. Spotlight esférico interactivo en toda la página (`window` `pointermove`
+ * 1. Cuadrícula de puntos base (`rgba(255,255,255,0.11)` 1px cada 26px).
+ * 2. Spotlight esférico discreto en toda la página (`window` `pointermove`
  *    con `useMotionValue` + `useSpring` + `useMotionTemplate`, 0 re-renders):
- *    - Resplandor esférico ambiental de 550px (esmeralda + cian)
- *    - Segunda malla de puntos esmeralda (`rgba(16,185,129,0.35)`) revelada
+ *    - Resplandor esférico de 380px (`rgba(16,185,129,0.045)` -> `transparent 75%`)
+ *    - Segunda malla de puntos esmeralda (`rgba(16,185,129,0.18)`) revelada
  *      mediante máscara radial ligada al cursor.
- * 3. Rieles arquitectónicos en los flancos (`hidden xl:block`) con nodos SVG,
- *    coordenadas técnicas y barra vertical de progreso de scroll (`scaleY`).
+ * 3. Rieles arquitectónicos decorativos en el fondo fijo (`hidden xl:block`)
+ *    sin limitar ni encerrar los contenedores de contenido.
  */
 export function GlobalBackdrop() {
   const shouldReduceMotion = useReducedMotion();
@@ -76,8 +76,8 @@ export function GlobalBackdrop() {
     };
   }, [pointerOpacity, pointerX, pointerY, shouldReduceMotion]);
 
-  const sphericalSpotlight = useMotionTemplate`radial-gradient(550px circle at ${springX}px ${springY}px, rgba(16, 185, 129, 0.085), rgba(6, 182, 212, 0.03) 45%, transparent 80%)`;
-  const dotSpotlightMask = useMotionTemplate`radial-gradient(280px circle at ${springX}px ${springY}px, #000 0%, transparent 100%)`;
+  const sphericalSpotlight = useMotionTemplate`radial-gradient(380px circle at ${springX}px ${springY}px, rgba(16, 185, 129, 0.045), transparent 75%)`;
+  const dotSpotlightMask = useMotionTemplate`radial-gradient(240px circle at ${springX}px ${springY}px, #000 0%, transparent 100%)`;
 
   const leftOrbY = useTransform(scrollYProgress, [0, 1], [-40, 140]);
   const rightOrbY = useTransform(scrollYProgress, [0, 1], [60, -130]);
@@ -91,17 +91,17 @@ export function GlobalBackdrop() {
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden select-none"
     >
-      {/* 1. Cuadrícula de puntos base visible y nítida (24px) */}
+      {/* 1. Cuadrícula de puntos base en todo el fondo (26px, opacidad 0.11) */}
       <div
         className="absolute inset-0"
         style={{
           backgroundImage:
-            "radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px)",
-          backgroundSize: "24px 24px",
+            "radial-gradient(rgba(255, 255, 255, 0.11) 1px, transparent 1px)",
+          backgroundSize: "26px 26px",
         }}
       />
 
-      {/* 2a. Resplandor esférico ambiental ligado al cursor en todo el viewport */}
+      {/* 2a. Resplandor esférico sutil ligado al cursor (380px, 0.045 -> transparent 75%) */}
       <motion.div
         className="absolute inset-0 transition-opacity duration-300 [@media(pointer:coarse)]:hidden"
         style={{
@@ -110,13 +110,13 @@ export function GlobalBackdrop() {
         }}
       />
 
-      {/* 2b. Segunda capa de puntos esmeralda iluminada por máscara radial */}
+      {/* 2b. Segunda capa de puntos esmeralda discreta (opacidad 0.18) */}
       <motion.div
         className="absolute inset-0 transition-opacity duration-300 [@media(pointer:coarse)]:hidden"
         style={{
           backgroundImage:
-            "radial-gradient(rgba(16, 185, 129, 0.35) 1px, transparent 1px)",
-          backgroundSize: "24px 24px",
+            "radial-gradient(rgba(16, 185, 129, 0.18) 1px, transparent 1px)",
+          backgroundSize: "26px 26px",
           maskImage: dotSpotlightMask,
           WebkitMaskImage: dotSpotlightMask,
           opacity: pointerOpacity,
@@ -125,23 +125,23 @@ export function GlobalBackdrop() {
 
       {/* Orbes ambientales laterales desplazados suavemente con el scroll */}
       <motion.div
-        className="absolute top-[14%] -left-40 h-[32rem] w-[32rem] rounded-full bg-emerald-500/[0.035] blur-3xl"
+        className="absolute top-[14%] -left-40 h-[32rem] w-[32rem] rounded-full bg-emerald-500/[0.03] blur-3xl"
         style={{
           transform: shouldReduceMotion ? staticTransform : leftOrbTransform,
         }}
       />
       <motion.div
-        className="absolute top-[48%] -right-40 h-[34rem] w-[34rem] rounded-full bg-cyan-500/[0.035] blur-3xl"
+        className="absolute top-[48%] -right-40 h-[34rem] w-[34rem] rounded-full bg-cyan-500/[0.03] blur-3xl"
         style={{
           transform: shouldReduceMotion ? staticTransform : rightOrbTransform,
         }}
       />
 
-      {/* 3. Estructuras arquitectónicas en los flancos vacíos (Desktop xl+) */}
-      <div className="relative mx-auto hidden h-full max-w-7xl border-x border-white/[0.06] xl:block">
+      {/* 3. Rieles arquitectónicos decorativos en el fondo fijo (Desktop xl+) */}
+      <div className="pointer-events-none absolute inset-y-0 left-1/2 hidden w-full max-w-7xl -translate-x-1/2 border-x border-slate-800/45 xl:block">
         {/* Indicador vertical de progreso de scroll en el riel izquierdo */}
         <motion.div
-          className="absolute top-0 bottom-0 -left-px w-[1.5px] origin-top bg-gradient-to-b from-emerald-400/75 via-emerald-500/50 to-cyan-400/60 shadow-[0_0_10px_rgba(16,185,129,0.55)]"
+          className="absolute top-0 bottom-0 -left-px w-[1.5px] origin-top bg-gradient-to-b from-emerald-400/60 via-emerald-500/40 to-cyan-400/50 shadow-[0_0_8px_rgba(16,185,129,0.45)]"
           style={{
             scaleY: shouldReduceMotion ? 1 : scrollYProgress,
           }}
@@ -151,16 +151,16 @@ export function GlobalBackdrop() {
         {RAIL_TICKS.map((top) => (
           <div key={top} style={{ top }} className="absolute inset-x-0">
             <span className="absolute -left-1 flex -translate-y-1/2 items-center">
-              <span className="h-px w-2 bg-emerald-500/20" />
-              <span className="-ml-1 font-mono text-[10px] leading-none text-emerald-400/30">
+              <span className="h-px w-2 bg-emerald-500/15" />
+              <span className="-ml-1 font-mono text-[10px] leading-none text-emerald-400/25">
                 +
               </span>
             </span>
             <span className="absolute -right-1 flex -translate-y-1/2 items-center">
-              <span className="-mr-1 font-mono text-[10px] leading-none text-emerald-400/30">
+              <span className="-mr-1 font-mono text-[10px] leading-none text-emerald-400/25">
                 +
               </span>
-              <span className="h-px w-2 bg-emerald-500/20" />
+              <span className="h-px w-2 bg-emerald-500/15" />
             </span>
           </div>
         ))}
@@ -173,7 +173,9 @@ export function GlobalBackdrop() {
               key={coord.id}
               style={{ top: coord.top }}
               className={`absolute flex -translate-y-1/2 items-center gap-2 ${
-                isLeft ? "-left-3 -translate-x-full flex-row-reverse" : "-right-3 translate-x-full"
+                isLeft
+                  ? "-left-3 -translate-x-full flex-row-reverse"
+                  : "-right-3 translate-x-full"
               }`}
             >
               <svg
@@ -181,7 +183,7 @@ export function GlobalBackdrop() {
                 height="12"
                 viewBox="0 0 22 12"
                 fill="none"
-                className="text-emerald-400/30"
+                className="text-emerald-400/25"
               >
                 <path
                   d={isLeft ? "M 22 6 H 8 L 4 2" : "M 0 6 H 14 L 18 2"}
@@ -195,7 +197,7 @@ export function GlobalBackdrop() {
                   fill="currentColor"
                 />
               </svg>
-              <span className="font-mono text-[10px] tracking-[0.18em] whitespace-nowrap text-slate-400/35">
+              <span className="font-mono text-[10px] tracking-[0.18em] whitespace-nowrap text-slate-400/30">
                 {coord.label}
               </span>
             </div>

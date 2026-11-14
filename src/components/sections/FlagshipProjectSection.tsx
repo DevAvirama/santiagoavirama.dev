@@ -59,7 +59,7 @@ export function FlagshipProjectSection() {
           {/* Resplandor ambiental en la esquina superior derecha */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-gradient-to-br from-cyan-500/20 via-indigo-500/15 to-transparent blur-3xl"
+            className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-linear-to-br from-cyan-500/20 via-indigo-500/15 to-transparent blur-3xl"
           />
 
           <div className="relative flex flex-col justify-between gap-4 border-b border-slate-800/80 pb-6 lg:flex-row lg:items-start">
@@ -80,7 +80,7 @@ export function FlagshipProjectSection() {
             {flagshipProject.caseStudySlug && (
               <Link
                 href={`/proyectos/${flagshipProject.caseStudySlug}`}
-                className="inline-flex h-11 shrink-0 items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 px-5 text-sm font-semibold text-slate-950 shadow-[0_0_25px_-5px_rgba(34,211,238,0.5)] transition-all hover:brightness-110 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
+                className="inline-flex h-11 shrink-0 items-center gap-2 rounded-xl bg-linear-to-r from-cyan-400 to-indigo-500 px-5 text-sm font-semibold text-slate-950 shadow-[0_0_25px_-5px_rgba(34,211,238,0.5)] transition-all hover:brightness-110 focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
               >
                 <BookOpenIcon className="size-4" />
                 <span>Leer Caso de Estudio Técnico</span>

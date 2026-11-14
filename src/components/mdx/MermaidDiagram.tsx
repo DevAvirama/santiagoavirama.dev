@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import mermaid from "mermaid";
+import { Reveal } from "@/components/motion/Reveal";
 
 interface MermaidDiagramProps {
   chart: string;
@@ -107,43 +108,47 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
 
   if (!normalizedChart || errorMessage || (!isLoading && !svgContent)) {
     return (
-      <figure className="glass-card my-8 overflow-hidden rounded-2xl p-4 sm:p-6">
-        <div className="mb-3 flex items-center justify-between border-b border-slate-800/80 pb-2.5 font-mono text-xs text-slate-400">
-          <span className="text-amber-400">
-            {"// Diagrama de Arquitectura del Sistema (Fallback de Código)"}
-          </span>
-          <span className="text-indigo-300">Mermaid.js</span>
-        </div>
-        {errorMessage && (
-          <p className="mb-3 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 font-mono text-xs text-amber-300">
-            {errorMessage}
-          </p>
-        )}
-        <pre className="overflow-x-auto rounded-xl border border-slate-800/90 bg-slate-950/90 p-4 font-mono text-xs leading-relaxed text-slate-200 [font-variant-ligatures:none]">
-          <code>{normalizedChart}</code>
-        </pre>
-      </figure>
+      <Reveal amount={0.1} y={12}>
+        <figure className="glass-card my-8 overflow-hidden rounded-2xl p-4 transition-colors duration-200 hover:border-emerald-500/40 sm:p-6">
+          <div className="mb-3 flex items-center justify-between border-b border-slate-800/80 pb-2.5 font-mono text-xs text-slate-400">
+            <span className="text-amber-400">
+              {"// Diagrama de Arquitectura del Sistema (Fallback de Código)"}
+            </span>
+            <span className="text-indigo-300">Mermaid.js</span>
+          </div>
+          {errorMessage && (
+            <p className="mb-3 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 font-mono text-xs text-amber-300">
+              {errorMessage}
+            </p>
+          )}
+          <pre className="overflow-x-auto rounded-xl border border-slate-800/90 bg-slate-950/90 p-4 font-mono text-xs leading-relaxed text-slate-200 [font-variant-ligatures:none]">
+            <code>{normalizedChart}</code>
+          </pre>
+        </figure>
+      </Reveal>
     );
   }
 
   return (
-    <figure className="glass-card my-8 overflow-hidden rounded-2xl p-4 sm:p-6">
-      <div className="mb-3 flex items-center justify-between border-b border-slate-800/80 pb-2.5 font-mono text-xs text-slate-400">
-        <span className="text-cyan-400">
-          {"// Diagrama de Arquitectura del Sistema"}
-        </span>
-        <span className="text-indigo-300">Mermaid.js</span>
-      </div>
-      {isLoading ? (
-        <div className="flex h-44 items-center justify-center font-mono text-xs text-slate-400">
-          <span>Inicializando esquema interactivo...</span>
+    <Reveal amount={0.1} y={12}>
+      <figure className="glass-card my-8 overflow-hidden rounded-2xl p-4 transition-colors duration-200 hover:border-emerald-500/40 sm:p-6">
+        <div className="mb-3 flex items-center justify-between border-b border-slate-800/80 pb-2.5 font-mono text-xs text-slate-400">
+          <span className="text-cyan-400">
+            {"// Diagrama de Arquitectura del Sistema"}
+          </span>
+          <span className="text-indigo-300">Mermaid.js</span>
         </div>
-      ) : (
-        <div
-          className="flex justify-center overflow-x-auto py-2 [&_svg]:max-w-full"
-          dangerouslySetInnerHTML={{ __html: svgContent ?? "" }}
-        />
-      )}
-    </figure>
+        {isLoading ? (
+          <div className="flex h-44 items-center justify-center font-mono text-xs text-slate-400">
+            <span>Inicializando esquema interactivo...</span>
+          </div>
+        ) : (
+          <div
+            className="flex justify-center overflow-x-auto py-2 [&_svg]:max-w-full"
+            dangerouslySetInnerHTML={{ __html: svgContent ?? "" }}
+          />
+        )}
+      </figure>
+    </Reveal>
   );
 }

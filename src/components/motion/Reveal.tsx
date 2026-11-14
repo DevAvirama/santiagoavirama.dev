@@ -30,6 +30,8 @@ interface RevealProps {
   fade?: boolean;
   /** `mount` para contenido above-the-fold; `inView` para scroll. */
   trigger?: "inView" | "mount";
+  /** Umbral de intersección (`0.15` por defecto). */
+  amount?: number;
 }
 
 /**
@@ -46,6 +48,7 @@ export function Reveal({
   y = REVEAL_OFFSET_Y,
   fade = true,
   trigger = "inView",
+  amount = REVEAL_VIEWPORT.amount,
 }: RevealProps) {
   const variants: Variants = {
     hidden: { opacity: fade ? 0 : 1, y },
@@ -59,7 +62,10 @@ export function Reveal({
   const triggerProps =
     trigger === "mount"
       ? { animate: "visible" }
-      : { whileInView: "visible", viewport: REVEAL_VIEWPORT };
+      : {
+          whileInView: "visible",
+          viewport: { once: REVEAL_VIEWPORT.once, amount },
+        };
 
   return (
     <MotionElement

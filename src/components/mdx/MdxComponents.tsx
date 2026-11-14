@@ -1,6 +1,7 @@
 import * as React from "react";
 import type { MDXRemoteProps } from "next-mdx-remote/rsc";
 import { MermaidDiagram } from "@/components/mdx/MermaidDiagram";
+import { Reveal } from "@/components/motion/Reveal";
 
 function extractTextFromChildren(node: React.ReactNode): string {
   if (typeof node === "string" || typeof node === "number") {
@@ -17,12 +18,14 @@ function extractTextFromChildren(node: React.ReactNode): string {
 
 export const mdxComponents: NonNullable<MDXRemoteProps["components"]> = {
   h2: ({ children, ...props }: React.ComponentPropsWithoutRef<"h2">) => (
-    <h2
-      className="mt-12 mb-4 border-b border-slate-800/80 pb-3 text-2xl font-bold tracking-tight text-white first:mt-0"
-      {...props}
-    >
-      {children}
-    </h2>
+    <Reveal amount={0.1} y={12} className="mt-12 mb-4 first:mt-0">
+      <h2
+        className="border-b border-slate-800/80 pb-3 text-2xl font-bold tracking-tight text-white"
+        {...props}
+      >
+        {children}
+      </h2>
+    </Reveal>
   ),
   h3: ({ children, ...props }: React.ComponentPropsWithoutRef<"h3">) => (
     <h3
@@ -38,20 +41,24 @@ export const mdxComponents: NonNullable<MDXRemoteProps["components"]> = {
     </p>
   ),
   ul: ({ children, ...props }: React.ComponentPropsWithoutRef<"ul">) => (
-    <ul
-      className="my-4 list-disc space-y-2 pl-6 text-base leading-relaxed text-slate-300 marker:text-cyan-400"
-      {...props}
-    >
-      {children}
-    </ul>
+    <Reveal amount={0.1} y={12}>
+      <ul
+        className="my-4 list-disc space-y-2 pl-6 text-base leading-relaxed text-slate-300 marker:text-cyan-400"
+        {...props}
+      >
+        {children}
+      </ul>
+    </Reveal>
   ),
   ol: ({ children, ...props }: React.ComponentPropsWithoutRef<"ol">) => (
-    <ol
-      className="my-4 list-decimal space-y-2 pl-6 text-base leading-relaxed text-slate-300 marker:font-mono marker:text-cyan-400"
-      {...props}
-    >
-      {children}
-    </ol>
+    <Reveal amount={0.1} y={12}>
+      <ol
+        className="my-4 list-decimal space-y-2 pl-6 text-base leading-relaxed text-slate-300 marker:font-mono marker:text-cyan-400"
+        {...props}
+      >
+        {children}
+      </ol>
+    </Reveal>
   ),
   li: ({ children, ...props }: React.ComponentPropsWithoutRef<"li">) => (
     <li className="pl-1 leading-relaxed text-slate-300" {...props}>
@@ -78,7 +85,7 @@ export const mdxComponents: NonNullable<MDXRemoteProps["components"]> = {
         {...(isExternal
           ? { target: "_blank", rel: "noopener noreferrer" }
           : {})}
-        className="font-mono text-sm font-medium text-cyan-400 underline decoration-cyan-500/40 underline-offset-4 transition-colors hover:text-cyan-300"
+        className="font-mono text-sm font-medium text-cyan-400 underline decoration-cyan-500/40 underline-offset-4 transition-colors duration-200 hover:text-emerald-300 hover:decoration-emerald-400/60"
         {...props}
       >
         {children}
@@ -89,19 +96,23 @@ export const mdxComponents: NonNullable<MDXRemoteProps["components"]> = {
     children,
     ...props
   }: React.ComponentPropsWithoutRef<"blockquote">) => (
-    <blockquote
-      className="my-6 rounded-r-2xl border-l-2 border-cyan-400 bg-slate-900/60 py-3 pr-4 pl-4 text-sm italic text-slate-300 backdrop-blur-md"
-      {...props}
-    >
-      {children}
-    </blockquote>
+    <Reveal amount={0.1} y={12}>
+      <blockquote
+        className="my-6 rounded-r-2xl border-l-2 border-cyan-400 bg-slate-900/60 py-3 pr-4 pl-4 text-sm italic text-slate-300 backdrop-blur-md transition-colors duration-200 hover:border-emerald-500/60"
+        {...props}
+      >
+        {children}
+      </blockquote>
+    </Reveal>
   ),
   table: ({ children, ...props }: React.ComponentPropsWithoutRef<"table">) => (
-    <div className="my-6 overflow-x-auto rounded-2xl border border-slate-800/90 bg-slate-900/45 backdrop-blur-md">
-      <table className="w-full border-collapse text-left text-sm" {...props}>
-        {children}
-      </table>
-    </div>
+    <Reveal amount={0.1} y={12}>
+      <div className="my-6 overflow-x-auto rounded-2xl border border-slate-800/90 bg-slate-900/45 backdrop-blur-md transition-colors duration-200 hover:border-emerald-500/40">
+        <table className="w-full border-collapse text-left text-sm" {...props}>
+          {children}
+        </table>
+      </div>
+    </Reveal>
   ),
   thead: ({ children, ...props }: React.ComponentPropsWithoutRef<"thead">) => (
     <thead
@@ -144,12 +155,14 @@ export const mdxComponents: NonNullable<MDXRemoteProps["components"]> = {
     }
 
     return (
-      <pre
-        className="my-6 overflow-x-auto rounded-2xl border border-slate-800/90 bg-slate-950/90 p-4 font-mono text-xs leading-relaxed text-slate-200 shadow-inner"
-        {...props}
-      >
-        {children}
-      </pre>
+      <Reveal amount={0.1} y={12}>
+        <pre
+          className="my-6 overflow-x-auto rounded-2xl border border-slate-800/90 bg-slate-950/90 p-4 font-mono text-xs leading-relaxed text-slate-200 shadow-inner transition-colors duration-200 hover:border-emerald-500/40"
+          {...props}
+        >
+          {children}
+        </pre>
+      </Reveal>
     );
   },
   code: ({

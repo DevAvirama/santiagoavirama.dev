@@ -115,43 +115,10 @@ const TRACE_ROUTES: TraceRoute[] = [
   },
 ];
 
-interface AmbientOrb {
-  id: string;
-  className: string;
-  keyframes: string[];
-  duration: number;
-}
-
-const AMBIENT_ORBS: AmbientOrb[] = [
-  {
-    id: "orb-emerald",
-    className:
-      "absolute -top-24 left-[12%] h-[26rem] w-[26rem] rounded-full bg-emerald-500/[0.04] blur-3xl",
-    keyframes: [
-      "translate3d(0px, 0px, 0px)",
-      "translate3d(42px, 26px, 0px)",
-      "translate3d(-24px, 40px, 0px)",
-    ],
-    duration: 20,
-  },
-  {
-    id: "orb-cyan",
-    className:
-      "absolute right-[10%] -bottom-24 h-[28rem] w-[28rem] rounded-full bg-cyan-500/[0.04] blur-3xl",
-    keyframes: [
-      "translate3d(0px, 0px, 0px)",
-      "translate3d(-44px, -28px, 0px)",
-      "translate3d(26px, -38px, 0px)",
-    ],
-    duration: 24,
-  },
-];
-
 /**
- * Fondo arquitectónico acelerado por GPU exclusivo del Hero:
- * - Blueprint Dot-Grid con máscara radial
- * - Spotlight de 450px controlado con `useMotionValue` + `useMotionTemplate`
- * - 2 orbes ambientales lentos animados con `transform: translate3d(...)`
+ * Capa arquitectónica exclusiva del Hero (sobre `GlobalBackdrop`):
+ * - Spotlight interactivo de 450px controlado con `useMotionValue` +
+ *   `useMotionTemplate` (sin re-renders ni duplicación del grid/orbes globales)
  * - Trazas SVG ortogonales laterales con pulso de flujo de datos
  */
 export function HeroBackground() {
@@ -173,21 +140,7 @@ export function HeroBackground() {
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 overflow-hidden select-none"
     >
-      {/* 1. Blueprint Dot-Grid (1px cada 24px, opacidad 0.07) */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, rgba(248, 250, 252, 0.07) 1px, transparent 1px)",
-          backgroundSize: "24px 24px",
-          maskImage:
-            "radial-gradient(ellipse 80% 70% at 50% 40%, #000 40%, transparent 100%)",
-          WebkitMaskImage:
-            "radial-gradient(ellipse 80% 70% at 50% 40%, #000 40%, transparent 100%)",
-        }}
-      />
-
-      {/* Spotlight interactivo sin re-renders; oculto en dispositivos táctiles */}
+      {/* Spotlight interactivo exclusivo del Hero; oculto en dispositivos táctiles */}
       <motion.div
         className="absolute inset-0 transition-opacity duration-300 [@media(pointer:coarse)]:hidden"
         style={{
@@ -196,26 +149,7 @@ export function HeroBackground() {
         }}
       />
 
-      {/* 2. Orbes ambientales lentos (solo transform: translate3d) */}
-      {AMBIENT_ORBS.map((orb) => (
-        <motion.div
-          key={orb.id}
-          className={orb.className}
-          animate={
-            shouldReduceMotion
-              ? { transform: "translate3d(0px, 0px, 0px)" }
-              : { transform: orb.keyframes }
-          }
-          transition={{
-            duration: orb.duration,
-            repeat: shouldReduceMotion ? 0 : Number.POSITIVE_INFINITY,
-            repeatType: "reverse",
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-
-      {/* 3. Trazas SVG ortogonales en los bordes laterales */}
+      {/* Trazas SVG ortogonales en los bordes laterales */}
       <svg
         viewBox="0 0 1200 600"
         fill="none"

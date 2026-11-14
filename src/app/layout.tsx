@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import { AmbientBackground } from "@/components/layout/AmbientBackground";
+import { GlobalBackdrop } from "@/components/motion/GlobalBackdrop";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -135,7 +135,7 @@ export default function RootLayout({
       <body className="relative flex min-h-screen flex-col bg-slate-950 font-sans text-slate-100 antialiased">
         <JsonLd data={rootStructuredData} />
         <MotionProvider>
-          <AmbientBackground />
+          <GlobalBackdrop />
           <Navbar />
           <main id="contenido-principal" className="relative z-10 flex-1">
             {children}
